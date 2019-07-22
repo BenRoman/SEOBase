@@ -1,0 +1,92 @@
+
+<h5>Search in Content Management</h5>
+<div class="row mt-4">
+  <div class="col-lg-3">
+    <input type="text" class="form-control" placeholder="Brand, node, manufacturer, model group ..." [(ngModel)]="keyWord" (input)="tableFilter()">
+    <i class="material-icons" matTooltip="In the search field you can enter the name of the brand, Node (n-000), Model group (mg-0000), Vehicle manufacturer (ma-0000)" matTooltipPosition="above" matTooltipClass="tooltippp">error_outline</i>
+  </div>
+  <div class="col-lg-1">
+    <button mat-button class="btn btn-dark" ><mat-icon class="material-icons ">search</mat-icon> </button>
+  </div>
+                 
+  <div class="col-lg-8 text-right">
+    <button mat-button class="btn btn-success" (click)="openSEOmain(-1)"><mat-icon class="material-icons ">add </mat-icon> add new </button>
+  </div>
+</div>
+
+
+<div class="mt-3">
+  <div class="row ">
+    <div class="col ">
+      <div class=" table-container ">
+        <mat-table #table [dataSource]="dataSource" matSort>
+
+          <ng-container matColumnDef="Target" >
+              <mat-header-cell *matHeaderCellDef [ngClass]="'small-column'" > Target </mat-header-cell>
+              <mat-cell *matCellDef="let element" [ngClass]="'small-column'">
+                {{element.Target_URL.split('/')[0]}} </mat-cell>
+            </ng-container>
+
+          <ng-container matColumnDef="Brand">
+            <mat-header-cell mat-sort-header *matHeaderCellDef > Brand </mat-header-cell>
+            <mat-cell *matCellDef="let element" >
+              {{element.Brand}} </mat-cell>
+          </ng-container>
+
+          <ng-container matColumnDef="Node">
+            <mat-header-cell *matHeaderCellDef >
+              Node
+            </mat-header-cell>
+            <mat-cell *matCellDef="let element" >
+              {{element.Node }} </mat-cell>
+          </ng-container>
+    
+          <ng-container matColumnDef="Manufacturer">
+            <mat-header-cell *matHeaderCellDef >
+              Vehicle manufacturer
+            </mat-header-cell>
+            <mat-cell *matCellDef="let element" >
+              {{element.Manufacturer}} </mat-cell>
+          </ng-container>
+
+          <ng-container matColumnDef="Model_Group">
+            <mat-header-cell *matHeaderCellDef >
+              Model Group
+            </mat-header-cell>
+            <mat-cell *matCellDef="let element" >
+              {{element.Model_Group}} </mat-cell>
+          </ng-container>
+
+          <ng-container matColumnDef="Target_URL">
+            <mat-header-cell *matHeaderCellDef >
+              Target URL
+            </mat-header-cell>
+            <mat-cell *matCellDef="let element" >
+
+              <span>{{ element.Target_URL}}</span>
+            </mat-cell>
+          </ng-container>
+
+          <ng-container matColumnDef="Action">
+            <div>
+              <mat-header-cell *matHeaderCellDef [ngClass]="'buttons-column'" >Action </mat-header-cell>
+              <mat-cell *matCellDef="let element"  [ngClass]="'buttons-column'">
+                <div class="center">
+                  
+                  <button mat-button class="btn blue btn-sm mx-1" (click)="openSEOmain(element.Id)"><mat-icon class="material-icons">edit</mat-icon>Edit </button>
+                  <button mat-button class="btn orange btn-sm mx-1" (click)= "removeItem(element.Id)"> <mat-icon class="material-icons">delete</mat-icon>Remove </button>
+                </div>
+              </mat-cell>
+            </div>
+          </ng-container>
+
+          <mat-header-row *matHeaderRowDef="displayedColumns;sticky: true"></mat-header-row>
+          <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
+          <mat-footer-row> </mat-footer-row>
+        </mat-table>
+
+      </div>
+      <mat-paginator [pageSizeOptions]="itemsPerPage" showFirstLastButtons></mat-paginator>
+    </div>
+  </div>
+</div>

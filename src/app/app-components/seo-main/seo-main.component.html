@@ -1,0 +1,186 @@
+<div class="row">
+  <div class="col-lg-12">
+    <div class="container-fluid">
+      <i class="material-icons float-right" (click)="close()">clear</i>
+      <!-- <i class="material-icons float-right" (click)="qwe()">edit</i> -->
+      <div class="px-2 py-3">
+        <h5>Select target URL</h5>
+        <div class="row col-lg-12 mt-3">
+          <button class="btn px-4 main-button" [ngClass]="{'btn-dark': targetURL == 'search'}"
+            (click)="targetURL = 'search' ">/search/</button>
+          <h5 class="mx-4 pt-1">or</h5>
+          <button class="btn px-4 main-button" [ngClass]="{'btn-dark': targetURL == 'category'}"
+            (click)="targetURL = 'category' ; categorySwipe = 'manufacturer' ">/category/</button>
+        </div>
+
+        <!-- checkboxes area -->
+
+        <div class="row col-lg-12 mt-4 settings-block" *ngIf="targetURL == 'search'">
+          <mat-checkbox class="mr-1" value="manufacturer"
+            [ngClass]="{'diselected-check-box' : currentItem.Model_Group , 'box-validator' : inValids.includes('Can not be empty') }"
+            (change)="currentItem.Manufacturer = $event.checked ? ' ' : '' ; inValids = [] " [ngModel]="(currentItem.Manufacturer && !currentItem.Model_Group)">Manufacturer</mat-checkbox>
+          <i class="material-icons"> add</i>
+
+          <mat-checkbox class="mr-1" value="modelgroup" 
+            [ngClass]="{'diselected-check-box' : currentItem.Manufacturer && !currentItem.Model_Group  , 'box-validator' : inValids.includes('Can not be empty') } "
+            (change)="currentItem.Model_Group = $event.checked ? ' ' : '' ; inValids = []"  [ngModel]="currentItem.Model_Group">ModelGroup</mat-checkbox>
+          <i class="material-icons"> add</i>
+          
+          <mat-checkbox class="mr-1" (change)="currentItem.Node = $event.checked ? ' ' : ''"  [ngModel]="currentItem.Node" [ngClass]="{'box-validator' : inValids.includes('Can not be empty') } " (change)="inValids = []">Node</mat-checkbox>
+          <i class="material-icons"> add</i>
+          <mat-checkbox class="mr-1" (change)="currentItem.Brand = $event.checked ? ' ' : ''" [ngModel]="currentItem.Brand" [ngClass]="{'box-validator' : inValids.includes('Can not be empty') } " (change)="inValids = []">Brand</mat-checkbox>
+          
+        </div>
+
+        <div class="row col-lg-12 mt-4 settings-block" *ngIf="targetURL == 'category'" >
+          <mat-radio-group aria-label="Select an option" (change)="categorySwipe = $event.value">
+            <mat-radio-button value="manufacturer" class="mr-3" checked>Category/Manufacturer</mat-radio-button>
+            <mat-radio-button value="modelgroup">Category/ModelGroup</mat-radio-button>
+          </mat-radio-group>
+        </div>
+
+        <!-- link area  -->
+
+        <div class="validation-block">
+
+            <h6 [class]="inValids.includes('Can not be empty')?'validation-words':'none'">Please select one or more items</h6>  
+          </div>
+        <div class="row col-lg-12 mt-2">
+          <h6><strong>URL link: </strong>
+            <span #linkElement>
+              {{targetURL}}
+              {{(currentItem.Brand && currentItem.Brand!=' ') ? "/" + currentItem.Brand :"" }}
+              {{(currentItem.Manufacturer && currentItem.Manufacturer!=' ') ? "/" + currentItem.Manufacturer :"" }}
+              {{(currentItem.Model_Group && currentItem.Model_Group!=' ')  ? "/" + currentItem.Model_Group :"" }}
+              {{(currentItem.Node && currentItem.Node!=' ')  ? "/" + currentItem.Node :"" }}
+            </span>
+          </h6>
+        </div>
+
+
+        <!-- inputs area -->
+        <div  *ngIf="targetURL=='search'">
+          
+          <div class="row my-3">
+            <div class="col-lg-3 " *ngIf= "currentItem.Brand" >
+              <h6>Brand</h6>
+              <mat-select placeholder="Brand" #singleSelect class="form-control" [(ngModel)]="this.currentItem.Brand" [ngClass]="{'validation-selects' : inValids.includes('Brand') }" (selectionChange)="validator()">
+                <mat-option>
+                  <ngx-mat-select-search [formControl]="brandFilterCtrl" [placeholderLabel]="'Find brand...'" ></ngx-mat-select-search>
+                </mat-option>
+                <mat-option *ngFor="let brand of filteredBrands | async" [value]="brand">
+                  {{brand}}
+                </mat-option>
+              </mat-select>
+              <!-- <input type="text" class="form-control" [(ngModel)]="this.currentItem.Brand" /> -->
+            </div>
+            <div class="col-lg-3 " *ngIf= "currentItem.Manufacturer || currentItem.Model_Group">
+              <h6> Manufacturer </h6>
+              <mat-select placeholder="Manufacturer" #singleSelect class="form-control" [(ngModel)]="this.currentItem.Manufacturer" (selectionChange)="getMG($event.value);validator()" [ngClass]="{'validation-selects' : inValids.includes('Manufacturer') }">
+                <mat-option>
+                  <ngx-mat-select-search [formControl]="manuFilterCtrl" [placeholderLabel]="'Find manufacturer...'"></ngx-mat-select-search>
+                </mat-option>
+                <mat-option *ngFor="let manu of filteredManus | async" [value]="manu">
+                  {{manu}}
+                </mat-option>
+              </mat-select>
+
+              <!-- <input type="text" class="form-control" [(ngModel)]="this.currentItem.Manufacturer" /> -->
+            </div>
+            <div class="col-lg-3 " *ngIf= "currentItem.Model_Group"  [ngClass]="{'diselected-check-box' : !currentItem.Manufacturer }">
+              <h6> ModelGroup </h6>
+              <mat-select placeholder="Model group" #singleSelect class="form-control" [(ngModel)]="this.currentItem.Model_Group" [ngClass]="{'validation-selects' : inValids.includes('Model_Group') }" (selectionChange)="validator()">
+                <mat-option>
+                  <ngx-mat-select-search [formControl]="mgFilterCtrl" [placeholderLabel]="'Find model group...'"></ngx-mat-select-search>
+                </mat-option>
+                <mat-option *ngFor="let mg of filteredMgs | async" [value]="mg">
+                  {{mg}}
+                </mat-option>
+              </mat-select>
+                <!-- <input type="text" class="form-control" [(ngModel)]="this.currentItem.Model_Group"/> -->
+            </div>
+            <div class="col-lg-3 " *ngIf= "currentItem.Node" >
+              <h6> Node </h6>
+              <mat-select placeholder="Node" #singleSelect class="form-control" [(ngModel)]="this.currentItem.Node" [ngClass]="{'validation-selects' : inValids.includes('Node') }" (selectionChange)="validator()">
+                <mat-option>
+                  <ngx-mat-select-search [formControl]="nodeFilterCtrl" [placeholderLabel]="'Find node...'"></ngx-mat-select-search>
+                </mat-option>
+                <mat-option *ngFor="let node of filteredNodes | async" [value]="node">
+                  {{node}}
+                </mat-option>
+              </mat-select>
+              <!-- <input type="text" class="form-control" [(ngModel)]="this.currentItem.Node"/> -->
+            </div>
+
+          </div>
+          <div class="row validation-block">
+            <div class="col-lg-3 " *ngIf= "currentItem.Brand" >
+              <h6 [class]="inValids.includes('Brand')?'validation-words':'none'">This field is required</h6>  
+            </div>
+            <div class="col-lg-3 " *ngIf= "currentItem.Manufacturer || currentItem.Model_Group">
+              <h6 [class]="inValids.includes('Manufacturer')?'validation-words':'none'">This field is required</h6>  
+            </div>
+            <div class="col-lg-3 " *ngIf= "currentItem.Model_Group">
+              <h6 [class]="inValids.includes('Model_Group')?'validation-words':'none'">This field is required</h6>  
+            </div>
+            <div class="col-lg-3 " *ngIf= "currentItem.Node">
+              <h6 [class]="inValids.includes('Node')?'validation-words':'none'">This field is required</h6>  
+            </div>
+          </div>
+        </div>
+        
+        <div class="row my-3" *ngIf="targetURL == 'category' ">
+          <div class="col-lg-6 ">
+            <h6>Category</h6>
+            <!-- TODO -->
+            <input type="text" class="form-control" />
+          </div>
+          <div class="col-lg-6 ">
+            <div *ngIf = "categorySwipe == 'manufacturer'">
+              <h6> Manufacturer</h6>
+              <mat-select placeholder="Manufacturer" #singleSelect class="form-control" [(ngModel)]="this.currentItem.Manufacturer" (selectionChange)="getMG($event.value)">
+                <mat-option>
+                  <ngx-mat-select-search [formControl]="manuFilterCtrl" [placeholderLabel]="'Find manufacturer...'"></ngx-mat-select-search>
+                </mat-option>
+                <mat-option *ngFor="let manu of filteredManus | async" [value]="manu">
+                  {{manu}}
+                </mat-option>
+              </mat-select>
+            </div>
+            <div *ngIf = "categorySwipe == 'modelgroup'">
+              <h6> ModelGroup</h6>
+              <mat-select placeholder="Model group" #singleSelect class="form-control" [(ngModel)]="this.currentItem.Model_Group">
+                <mat-option>
+                  <ngx-mat-select-search [formControl]="mgFilterCtrl" [placeholderLabel]="'Find model group...'"></ngx-mat-select-search>
+                </mat-option>
+                <mat-option *ngFor="let mg of filteredMgs | async" [value]="mg">
+                  {{mg}}
+                </mat-option>
+              </mat-select>
+            </div>
+          </div>
+        </div>
+
+      
+
+
+
+        <div class="row mb-3" >
+          <div class="col-lg-12 mt-2">
+            <h6>Memo</h6>
+            <textarea rows="8" type="text" class="form-control" [(ngModel)] = "this.currentItem.Memo"></textarea>
+          </div>
+        </div>
+        <!--mat-button -->
+        <div class="text-right">
+          <button class="btn btn-primary " mat-button (click)="preview()"><mat-icon>remove_red_eye</mat-icon>Preview</button>
+          <button class="btn btn-success ml-4 pl-1" mat-button (click)="addNewItem()"><mat-icon *ngIf= "isNew">add</mat-icon> <mat-icon *ngIf="!isNew">edit</mat-icon>{{isNew == true ?'Add' : 'Edit'}}</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+
+

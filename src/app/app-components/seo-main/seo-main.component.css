@@ -1,0 +1,68 @@
+button.px-4 {
+    border: 1px solid black;
+}
+
+.mat-icon-button{
+    margin-top: -8px;
+}
+
+.diselected-check-box{
+    pointer-events: none;
+    color: #c1bfbf;
+}
+
+.diselected-check-box .mat-checkbox-frame  {
+    border-color: green;
+}
+.mat-checkbox-frame {
+    border-color: #ffc107 !important;
+}
+.text-right button{
+    width: 145px;
+}
+
+.text-right mat-icon{
+    margin-right: 6px;
+    margin-top: -2px;
+}
+h6 span{
+    color:#c1bfbf;
+}
+
+p{
+    font-family: Roboto,"Helvetica Neue",sans-serif;    
+}
+
+.settings-block{
+    height:35px;
+}
+
+.main-button{
+    width:150px;
+}
+.settings-block i{
+    margin-left: 3px;;
+    margin-right: 5px;;
+}
+i{
+    cursor: pointer;
+}
+
+.validation-selects{
+    border-color: #e25215;
+}
+
+.validation-words{
+    font-size:13px;
+    color: #e25215;
+}
+.none {
+    display: none;
+}
+
+.validation-block{
+    margin-top: -13px;
+    height: 23px;
+}
+
+
