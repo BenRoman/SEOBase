@@ -86,3 +86,7 @@ mat-header-row {
 .small-column{
     flex: 0 0 100px;
 }
+
+.table-striped > mat-row:nth-child(odd)  {
+    background-color:#fbfbfb;
+}

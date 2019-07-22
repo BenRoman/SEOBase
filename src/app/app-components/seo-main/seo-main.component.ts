@@ -108,8 +108,8 @@ export class SeoMainComponent implements OnInit {
   }
 
   qwe(){
-    console.log(this.targetURL);
-    console.log(this.categorySwipe);
+    console.log(this.inValids);
+    console.log(this.currentItem);
   }
 
   close(): void {
