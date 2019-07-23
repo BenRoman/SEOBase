@@ -90,3 +90,8 @@ mat-header-row {
 .table-striped > mat-row:nth-child(odd)  {
     background-color:#fbfbfb;
 }
+
+mat-table{
+    border-radius: 0.25rem 0.25rem 0 0;
+    overflow: hidden;
+}

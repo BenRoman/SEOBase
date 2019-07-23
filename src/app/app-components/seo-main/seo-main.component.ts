@@ -34,8 +34,8 @@ export class SeoMainComponent implements OnInit {
   private targetURL:string ;
   public categorySwipe: string;
   public isNew: boolean = true;
-  public validation: boolean = true;
   public inValids: string[] = [];
+
   public brands :string[] ;
   public nodes :string[] ;
   public manus :string[] ;
@@ -73,7 +73,6 @@ export class SeoMainComponent implements OnInit {
       });
 
     
-  
 
 
   }
@@ -107,10 +106,10 @@ export class SeoMainComponent implements OnInit {
     );
   }
 
-  qwe(){
-    console.log(this.inValids);
-    console.log(this.currentItem);
-  }
+  // qwe(){
+  //   console.log(this.inValids);
+  //   console.log(this.currentItem);
+  // }
 
   close(): void {
     this.dialogRef.close();
