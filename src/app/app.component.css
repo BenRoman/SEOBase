@@ -1,0 +1,8 @@
+.btn-icon-selected{
+    border: solid rgba(155, 155, 155, 0.47);
+    border-width: 3px;
+}
+
+.language-clickable{
+    cursor: pointer;
+}

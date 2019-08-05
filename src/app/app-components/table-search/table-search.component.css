@@ -59,7 +59,7 @@ mat-header-row {
 }
 
 .center .mat-button{
-    width: 100px;
+    min-width: 100px;
     line-height: 30px;
 }
 
@@ -80,7 +80,7 @@ mat-header-row {
 }
 
 .buttons-column{
-    flex: 0 0 265px;
+    flex: 0 0 300px;
 }
 
 .small-column{

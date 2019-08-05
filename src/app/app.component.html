@@ -2,14 +2,29 @@
   <div class="card">
     <div class="card-header">
       <h6>
-        <span class="atp-link" >ATP Content manager</span>
+        <span class="atp-link">{{ 'labels_and_placeholders.ATP_label' | translate}}</span>
         <span class="account-display-name float-right"></span>
       </h6>
 
     </div>
     <div class="card-body">
+
+
+      <div class="float-right ">
+        <span class="mr-2">
+          <label [class]="selectedLanguageIso=='en'?'btn-icon-selected':''">
+            <flag-icon country="gb" class="language-clickable mx-1 " (click)="setLanguage('en')">en</flag-icon>
+          </label>
+          <label [class]="selectedLanguageIso=='de'?'btn-icon-selected':''">
+            <flag-icon country="de" class="language-clickable mx-1" (click)="setLanguage('de')">de</flag-icon>
+          </label>
+          <label [class]="selectedLanguageIso=='ua'?'btn-icon-selected':''">
+            <flag-icon country="ua" class="language-clickable mx-1" (click)="setLanguage('ua')">de</flag-icon>
+          </label>
+        </span>
+      </div>
+
       <table-search></table-search>
-      <!-- <seo-main></seo-main> -->
     </div>
 
   </div>

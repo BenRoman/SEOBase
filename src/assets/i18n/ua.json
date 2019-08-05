@@ -1,0 +1,57 @@
+{
+    "button_texts": {
+      "add_new_button": "створити новий",
+      "preview_button": "Показати",
+      "add_button": "Додати",
+      "confirm_remove_button": "Так, видалити!",
+      "cancel_remove_button": "Ні, залишити!",
+      "column_buttons": {
+        "delete_column_button": "Видалити",
+        "edit_column_button": "Редагувати"
+      },
+      "navi_buttons":{
+        "search":"Пошук",
+        "category":"Категорія"
+      }
+    },
+    "client_info_texts": {
+      "removing_question_text": "Ви впевнені?",
+      "removing_details_text": "Ви не зможете відновити видалений вміст!",
+      "removed_successfully_title": "Видалення пройшло успішно.",
+      "remove_modal_title": "Видалено!"
+    },
+    "column_headers": {
+      "target_column": "Ціль",
+      "brand_column": "Бренд",
+      "node_column": "Вузол",
+      "manufacturer_column": "Марка",
+      "mg_column": "Модель",
+      "target_URL_column": "Цільове посилання",
+      "action_column": "Дії"
+    },
+  
+    "labels_and_placeholders": {
+      "ATP_label": "ATP контент менеджер",
+      "items_per_page_mat_info": "Записів на сторінку",
+      "header_over_search_input": "Пошук в Content Management",
+      "search_input_placeholder": "Бранд, вузол, марка, модель ...",
+      "select_target_URL": "Виберіть цільове посилання",
+      "or": "або",
+      "URL_link_label":"посилання:",
+      "search_input_helper":"підказка ",
+      "placeholder_for_ngx_mat_select":"Виберіть необхідний",
+      "checkboxes":{
+        "manufacturer":"Мануфактура",
+        "model_group":"Модель",
+        "node":"Вузол",
+        "brand":"Бренд",
+        "category":"Категорія",
+        "memo":"Коментар"
+      }
+    },
+    "validation_labels":{
+      "empty_creation":"Виберіть хоч щось",
+      "required_field":"Надо заповнити"
+    }
+  }
+  

@@ -1,0 +1,57 @@
+{
+    "button_texts": {
+      "add_new_button": "",
+      "preview_button": "",
+      "add_button": "",
+      "confirm_remove_button": "",
+      "cancel_remove_button": "",
+      "column_buttons": {
+        "delete_column_button": "",
+        "edit_column_button": ""
+      },
+      "navi_buttons":{
+        "search":"",
+        "category":""
+      }
+    },
+    "client_info_texts": {
+      "removing_question_text": "",
+      "removing_details_text": "",
+      "removed_successfully_title": "",
+      "remove_modal_title": ""
+    },
+    "column_headers": {
+      "target_column": "",
+      "brand_column": "",
+      "node_column": "",
+      "manufacturer_column": "",
+      "mg_column": "",
+      "target_URL_column": "",
+      "action_column": ""
+    },
+  
+    "labels_and_placeholders": {
+      "ATP_label": "",
+      "items_per_page_mat_info": "",
+      "header_over_search_input": "",
+      "search_input_placeholder": " ...",
+      "select_target_URL": "",
+      "or": "",
+      "URL_link_label":"",
+      "search_input_helper":"",
+      "placeholder_for_ngx_mat_select":"",
+      "checkboxes":{
+        "manufacturer":"",
+        "model_group":"",
+        "node":"",
+        "brand":"",
+        "category":"",
+        "memo":""
+      }
+    },
+    "validation_labels":{
+      "empty_creation":"Виберіть хоч щось",
+      "required_field":"Надо заповнити"
+    }
+  }
+  

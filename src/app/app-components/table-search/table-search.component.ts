@@ -5,6 +5,7 @@ import { TableItem } from 'src/app/models/tableItem';
 import { DataService } from 'src/app/services.ts/data.service';
 import Swal, {SweetAlertType} from 'sweetalert2';
 import 'rxjs';
+import {TranslateService} from '@ngx-translate/core';
 
 @Component({
   selector: 'table-search',
@@ -20,12 +21,16 @@ export class TableSearchComponent implements OnInit {
   dataSource = new MatTableDataSource<TableItem>();
   keyWord:string = "";
 
-  constructor(public SEOmainDataDialog: MatDialog , public _dataService : DataService) { }
+  constructor(public SEOmainDataDialog: MatDialog , public _dataService : DataService , private _translationService: TranslateService) { }
 
   ngOnInit() {
     this.dataSource = new MatTableDataSource<TableItem>(this._dataService.get());
     this.dataSource.paginator = this.paginator;
     this.dataSource.sort = this.sort;
+    this._translationService.stream('labels_and_placeholders.items_per_page_mat_info').subscribe(res=>{
+      this.dataSource.paginator._intl.itemsPerPageLabel = res;
+      this.dataSource.filter = '';
+    })
   }
 
   tableFilter(){
@@ -46,17 +51,17 @@ export class TableSearchComponent implements OnInit {
 
   removeItem(id:string){
     Swal.fire({
-      title: 'Are you sure?',
-      text: 'You will not be able to recover this item!',
+      title: this._translationService.instant('client_info_texts.removing_question_text'),
+      text: this._translationService.instant('client_info_texts.removing_details_text'),
       type: 'warning',
       showCancelButton: true,
-      confirmButtonText: 'Yes, delete it!',
-      cancelButtonText: 'No, keep it'
+      confirmButtonText: this._translationService.instant('button_texts.confirm_remove_button'),
+      cancelButtonText: this._translationService.instant('button_texts.cancel_remove_button')
     }).then((result) => {
       if (result.value) {
         Swal.fire(
-          'Deleted!',
-          'Your item has been deleted.',
+          this._translationService.instant('client_info_texts.remove_modal_title'),
+          this._translationService.instant('client_info_texts.removed_successfully_title'),
           'success'
         );
         this._dataService.delete(id);

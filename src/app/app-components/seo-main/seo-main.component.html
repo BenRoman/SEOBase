@@ -4,13 +4,13 @@
       <i class="material-icons float-right" (click)="close()">clear</i>
       <!-- <i class="material-icons float-right" (click)="qwe()">edit</i> -->
       <div class="px-2 py-3">
-        <h5>Select target URL</h5>
+        <h5>{{ 'labels_and_placeholders.select_target_URL' | translate}}</h5>
         <div class="row col-lg-12 mt-3">
           <button class="btn px-4 main-button" [ngClass]="{'btn-dark': targetURL == 'search'}"
-            (click)="targetURL = 'search' ">/search/</button>
-          <h5 class="mx-4 pt-1">or</h5>
+            (click)="targetURL = 'search' ">/{{ 'button_texts.navi_buttons.search' | translate}}/</button>
+          <h5 class="mx-4 pt-1">{{ 'labels_and_placeholders.or' | translate}}</h5>
           <button class="btn px-4 main-button" [ngClass]="{'btn-dark': targetURL == 'category'}"
-            (click)="targetURL = 'category' ; categorySwipe = 'manufacturer' ; inValids.pop()">/category/</button>
+            (click)="targetURL = 'category' ; categorySwipe = 'manufacturer' ; inValids.pop()">/{{ 'button_texts.navi_buttons.category' | translate}}/</button>
         </div>
 
         <!-- checkboxes area -->
@@ -18,24 +18,24 @@
         <div class="row col-lg-12 mt-4 settings-block" *ngIf="targetURL == 'search'">
           <mat-checkbox class="mr-1" value="manufacturer"
             [ngClass]="{'diselected-check-box' : currentItem.Model_Group , 'box-validator' : inValids.includes('Can not be empty') }"
-            (change)="currentItem.Manufacturer = $event.checked ? ' ' : ''" [ngModel]="(currentItem.Manufacturer && !currentItem.Model_Group)">Manufacturer</mat-checkbox>
+            (change)="currentItem.Manufacturer = $event.checked ? ' ' : ''" [ngModel]="(currentItem.Manufacturer && !currentItem.Model_Group)">{{ 'labels_and_placeholders.checkboxes.manufacturer' | translate}}</mat-checkbox>
           <i class="material-icons"> add</i>
 
           <mat-checkbox class="mr-1" value="modelgroup" 
             [ngClass]="{'diselected-check-box' : currentItem.Manufacturer && !currentItem.Model_Group  , 'box-validator' : inValids.includes('Can not be empty') } "
-            (change)="currentItem.Model_Group = $event.checked ? ' ' : ''  ; $event.checked ? currentItem.Manufacturer = ' ' : none"  [ngModel]="currentItem.Model_Group">ModelGroup</mat-checkbox>
+            (change)="currentItem.Model_Group = $event.checked ? ' ' : ''  ; $event.checked ? currentItem.Manufacturer = ' ' : none"  [ngModel]="currentItem.Model_Group">{{ 'labels_and_placeholders.checkboxes.model_group' | translate}}</mat-checkbox>
           <i class="material-icons"> add</i>
           
-          <mat-checkbox class="mr-1" (change)="currentItem.Node = $event.checked ? ' ' : ''"  [ngModel]="currentItem.Node" [ngClass]="{'box-validator' : inValids.includes('Can not be empty') } " >Node</mat-checkbox>
+          <mat-checkbox class="mr-1" (change)="currentItem.Node = $event.checked ? ' ' : ''"  [ngModel]="currentItem.Node" [ngClass]="{'box-validator' : inValids.includes('Can not be empty') } " >{{ 'labels_and_placeholders.checkboxes.node' | translate}}</mat-checkbox>
           <i class="material-icons"> add</i>
-          <mat-checkbox class="mr-1" (change)="currentItem.Brand = $event.checked ? ' ' : ''" [ngModel]="currentItem.Brand" [ngClass]="{'box-validator' : inValids.includes('Can not be empty') } " >Brand</mat-checkbox>
+          <mat-checkbox class="mr-1" (change)="currentItem.Brand = $event.checked ? ' ' : ''" [ngModel]="currentItem.Brand" [ngClass]="{'box-validator' : inValids.includes('Can not be empty') } " >{{ 'labels_and_placeholders.checkboxes.brand' | translate}}</mat-checkbox>
           
         </div>
 
         <div class="row col-lg-12 mt-4 settings-block" *ngIf="targetURL == 'category'" >
           <mat-radio-group aria-label="Select an option" (change)="categorySwipe = $event.value" >
-            <mat-radio-button value="manufacturer" class="mr-3" checked>Category/Manufacturer</mat-radio-button>
-            <mat-radio-button value="modelgroup">Category/ModelGroup</mat-radio-button>
+            <mat-radio-button value="manufacturer" class="mr-3" checked>{{ 'labels_and_placeholders.checkboxes.category' | translate}}/{{ 'labels_and_placeholders.checkboxes.manufacturer' | translate}}</mat-radio-button>
+            <mat-radio-button value="modelgroup">{{ 'labels_and_placeholders.checkboxes.category' | translate}}/{{ 'labels_and_placeholders.checkboxes.model_group' | translate}}</mat-radio-button>
           </mat-radio-group>
         </div>
 
@@ -43,10 +43,10 @@
 
         <div class="validation-block" *ngIf="targetURL=='search'">
 
-          <h6 [class]="inValids.includes('Can not be empty')?'validation-words':'none'">Please select one or more items</h6>  
+          <h6 [class]="inValids.includes('Can not be empty')?'validation-words':'none'">{{ 'validation_labels.empty_creation' | translate}}</h6>  
         </div>
         <div class="row col-lg-12 mt-2">
-          <h6><strong>URL link: </strong>
+          <h6><strong>{{ 'labels_and_placeholders.URL_link_label' | translate}} </strong>
             <span #linkElement>
               {{targetURL}}
               {{(currentItem.Brand && currentItem.Brand!=' ') ? "/" + currentItem.Brand :"" }}
@@ -63,10 +63,10 @@
           
           <div class="row my-3">
             <div class="col-lg-3 " *ngIf= "currentItem.Brand" >
-              <h6>Brand</h6>
-              <mat-select placeholder="Brand" #singleSelect class="form-control" [(ngModel)]="this.currentItem.Brand" [ngClass]="{'validation-selects' : inValids.includes('Brand') }" (selectionChange)="inValids = []">
+              <h6>{{ 'labels_and_placeholders.checkboxes.brand' | translate}}</h6>
+              <mat-select placeholder="{{ 'labels_and_placeholders.checkboxes.brand' | translate}}" #singleSelect class="form-control" [(ngModel)]="this.currentItem.Brand" [ngClass]="{'validation-selects' : inValids.includes('Brand') }" (selectionChange)="inValids = []">
                 <mat-option>
-                  <ngx-mat-select-search [formControl]="brandFilterCtrl" [placeholderLabel]="'Find brand...'" ></ngx-mat-select-search>
+                  <ngx-mat-select-search [formControl]="brandFilterCtrl" [placeholderLabel]="'labels_and_placeholders.placeholder_for_ngx_mat_select' | translate" ></ngx-mat-select-search>
                 </mat-option>
                 <mat-option *ngFor="let brand of filteredBrands | async" [value]="brand">
                   {{brand}}
@@ -75,10 +75,10 @@
               <!-- <input type="text" class="form-control" [(ngModel)]="this.currentItem.Brand" /> -->
             </div>
             <div class="col-lg-3 " *ngIf= "currentItem.Manufacturer || currentItem.Model_Group">
-              <h6> Manufacturer </h6>
-              <mat-select placeholder="Manufacturer" #singleSelect class="form-control" [(ngModel)]="this.currentItem.Manufacturer" (selectionChange)="getMG($event.value);inValids = []" [ngClass]="{'validation-selects' : inValids.includes('Manufacturer') }">
+              <h6> {{ 'labels_and_placeholders.checkboxes.manufacturer' | translate}} </h6>
+              <mat-select placeholder="{{ 'labels_and_placeholders.checkboxes.manufacturer' | translate}}" #singleSelect class="form-control" [(ngModel)]="this.currentItem.Manufacturer" (selectionChange)="getMG($event.value);inValids = []" [ngClass]="{'validation-selects' : inValids.includes('Manufacturer') }">
                 <mat-option>
-                  <ngx-mat-select-search [formControl]="manuFilterCtrl" [placeholderLabel]="'Find manufacturer...'"></ngx-mat-select-search>
+                  <ngx-mat-select-search [formControl]="manuFilterCtrl" [placeholderLabel]="'labels_and_placeholders.placeholder_for_ngx_mat_select' | translate"></ngx-mat-select-search>
                 </mat-option>
                 <mat-option *ngFor="let manu of filteredManus | async" [value]="manu">
                   {{manu}}
@@ -88,10 +88,10 @@
               <!-- <input type="text" class="form-control" [(ngModel)]="this.currentItem.Manufacturer" /> -->
             </div>
             <div class="col-lg-3 " *ngIf= "currentItem.Model_Group"  [ngClass]="{'diselected-check-box' : currentItem.Manufacturer == ' ' }">
-              <h6> ModelGroup </h6>
-              <mat-select placeholder="Model group" #singleSelect class="form-control" [(ngModel)]="this.currentItem.Model_Group" [ngClass]="{'validation-selects' : inValids.includes('Model_Group') }" (selectionChange)="inValids = []">
+              <h6> {{ 'labels_and_placeholders.checkboxes.model_group' | translate}} </h6>
+              <mat-select placeholder="{{ 'labels_and_placeholders.checkboxes.model_group' | translate}}" #singleSelect class="form-control" [(ngModel)]="this.currentItem.Model_Group" [ngClass]="{'validation-selects' : inValids.includes('Model_Group') }" (selectionChange)="inValids = []">
                 <mat-option>
-                  <ngx-mat-select-search [formControl]="mgFilterCtrl" [placeholderLabel]="'Find model group...'"></ngx-mat-select-search>
+                  <ngx-mat-select-search [formControl]="mgFilterCtrl" [placeholderLabel]="'labels_and_placeholders.placeholder_for_ngx_mat_select' | translate"></ngx-mat-select-search>
                 </mat-option>
                 <mat-option *ngFor="let mg of filteredMgs | async" [value]="mg">
                   {{mg}}
@@ -100,10 +100,10 @@
                 <!-- <input type="text" class="form-control" [(ngModel)]="this.currentItem.Model_Group"/> -->
             </div>
             <div class="col-lg-3 " *ngIf= "currentItem.Node" >
-              <h6> Node </h6>
-              <mat-select placeholder="Node" #singleSelect class="form-control" [(ngModel)]="this.currentItem.Node" [ngClass]="{'validation-selects' : inValids.includes('Node') }" (selectionChange)="inValids = []">
+              <h6> {{ 'labels_and_placeholders.checkboxes.node' | translate}} </h6>
+              <mat-select placeholder="{{ 'labels_and_placeholders.checkboxes.node' | translate}}" #singleSelect class="form-control" [(ngModel)]="this.currentItem.Node" [ngClass]="{'validation-selects' : inValids.includes('Node') }" (selectionChange)="inValids = []">
                 <mat-option>
-                  <ngx-mat-select-search [formControl]="nodeFilterCtrl" [placeholderLabel]="'Find node...'"></ngx-mat-select-search>
+                  <ngx-mat-select-search [formControl]="nodeFilterCtrl" [placeholderLabel]="'labels_and_placeholders.placeholder_for_ngx_mat_select' | translate"></ngx-mat-select-search>
                 </mat-option>
                 <mat-option *ngFor="let node of filteredNodes | async" [value]="node">
                   {{node}}
@@ -115,16 +115,16 @@
           </div>
           <div class="row validation-block">
             <div class="col-lg-3 " *ngIf= "currentItem.Brand" >
-              <h6 [class]="inValids.includes('Brand')?'validation-words':'none'">This field is required</h6>  
+              <h6 [class]="inValids.includes('Brand')?'validation-words':'none'">{{ 'validation_labels.required_field' | translate}}</h6>  
             </div>
             <div class="col-lg-3 " *ngIf= "currentItem.Manufacturer || currentItem.Model_Group">
-              <h6 [class]="inValids.includes('Manufacturer')?'validation-words':'none'">This field is required</h6>  
+              <h6 [class]="inValids.includes('Manufacturer')?'validation-words':'none'">{{ 'validation_labels.required_field' | translate}}</h6>  
             </div>
             <div class="col-lg-3 " *ngIf= "currentItem.Model_Group">
-              <h6 [class]="inValids.includes('Model_Group')?'validation-words':'none'">This field is required</h6>  
+              <h6 [class]="inValids.includes('Model_Group')?'validation-words':'none'">{{ 'validation_labels.required_field' | translate}}</h6>  
             </div>
             <div class="col-lg-3 " *ngIf= "currentItem.Node">
-              <h6 [class]="inValids.includes('Node')?'validation-words':'none'">This field is required</h6>  
+              <h6 [class]="inValids.includes('Node')?'validation-words':'none'">{{ 'validation_labels.required_field' | translate}}</h6>  
             </div>
           </div>
         </div>
@@ -134,16 +134,16 @@
         <div  *ngIf="targetURL == 'category' ">
           <div class="row my-3">
             <div class="col-lg-6 ">
-              <h6>Category</h6>
+              <h6>{{ 'labels_and_placeholders.checkboxes.category' | translate}}</h6>
               <!-- TODO -->
               <input type="text" class="form-control" />
             </div>
             <div class="col-lg-6 ">
               <div *ngIf = "categorySwipe == 'manufacturer'">
-                <h6> Manufacturer</h6>
-                <mat-select placeholder="Manufacturer" #singleSelect class="form-control" [(ngModel)]="this.currentItem.Manufacturer" (selectionChange)="getMG($event.value)" [ngClass]="{'validation-selects' : (inValids.includes('Can not be empty') || inValids.includes('Manufacturer')) }" (selectionChange)="validator()">
+                <h6> {{ 'labels_and_placeholders.checkboxes.manufacturer' | translate}}</h6>
+                <mat-select placeholder="{{ 'labels_and_placeholders.checkboxes.manufacturer' | translate}}" #singleSelect class="form-control" [(ngModel)]="this.currentItem.Manufacturer" (selectionChange)="getMG($event.value)" [ngClass]="{'validation-selects' : (inValids.includes('Can not be empty') || inValids.includes('Manufacturer')) }" (selectionChange)="validator()">
                   <mat-option>
-                    <ngx-mat-select-search [formControl]="manuFilterCtrl" [placeholderLabel]="'Find manufacturer...'"></ngx-mat-select-search>
+                    <ngx-mat-select-search [formControl]="manuFilterCtrl" [placeholderLabel]="'labels_and_placeholders.placeholder_for_ngx_mat_select' | translate"></ngx-mat-select-search>
                   </mat-option>
                   <mat-option *ngFor="let manu of filteredManus | async" [value]="manu">
                     {{manu}}
@@ -151,10 +151,10 @@
                 </mat-select>
               </div>
               <div *ngIf = "categorySwipe == 'modelgroup'">
-                <h6> ModelGroup</h6>
-                <mat-select placeholder="Model group" #singleSelect class="form-control" [(ngModel)]="this.currentItem.Model_Group" [ngClass]="{'validation-selects' : inValids.includes('Can not be empty') }" (selectionChange)="validator()">
+                <h6> {{ 'labels_and_placeholders.checkboxes.model_group' | translate}}</h6>
+                <mat-select placeholder="{{ 'labels_and_placeholders.checkboxes.model_group' | translate}}" #singleSelect class="form-control" [(ngModel)]="this.currentItem.Model_Group" [ngClass]="{'validation-selects' : inValids.includes('Can not be empty') }" (selectionChange)="validator()">
                   <mat-option>
-                    <ngx-mat-select-search [formControl]="mgFilterCtrl" [placeholderLabel]="'Find model group...'"></ngx-mat-select-search>
+                    <ngx-mat-select-search [formControl]="mgFilterCtrl" [placeholderLabel]="'labels_and_placeholders.placeholder_for_ngx_mat_select' | translate"></ngx-mat-select-search>
                   </mat-option>
                   <mat-option *ngFor="let mg of filteredMgs | async" [value]="mg">
                     {{mg}}
@@ -171,10 +171,10 @@
             </div>
             <div class="col-lg-6 ">
               <div *ngIf = "categorySwipe == 'manufacturer'">
-                  <h6 [class]=" (inValids.includes('Can not be empty') || inValids.includes('Manufacturer'))?'validation-words':'none'">This field is required</h6>  
+                  <h6 [class]=" (inValids.includes('Can not be empty') || inValids.includes('Manufacturer'))?'validation-words':'none'">{{ 'validation_labels.required_field' | translate}}</h6>  
               </div>
               <div *ngIf = "categorySwipe == 'modelgroup'">
-                  <h6 [class]=" (inValids.includes('Can not be empty') || inValids.includes('Manufacturer'))?'validation-words':'none'">This field is required</h6>  
+                  <h6 [class]=" (inValids.includes('Can not be empty') || inValids.includes('Manufacturer'))?'validation-words':'none'">{{ 'validation_labels.required_field' | translate}}</h6>  
               </div>
             </div>
           </div>
@@ -186,14 +186,14 @@
 
         <div class="row mb-3" >
           <div class="col-lg-12 mt-2">
-            <h6>Memo</h6>
+            <h6>{{ 'labels_and_placeholders.checkboxes.memo' | translate}}</h6>
             <textarea rows="8" type="text" class="form-control" [(ngModel)] = "this.currentItem.Memo"></textarea>
           </div>
         </div>
         <!--mat-button -->
         <div class="text-right">
-          <button class="btn btn-primary " mat-button (click)="preview()"><mat-icon>remove_red_eye</mat-icon>Preview</button>
-          <button class="btn btn-success ml-4 pl-1" mat-button (click)="addNewItem()"><mat-icon *ngIf= "isNew">add</mat-icon> <mat-icon *ngIf="!isNew">edit</mat-icon>{{isNew == true ?'Add' : 'Edit'}}</button>
+          <button class="btn btn-primary " mat-button (click)="preview()"><mat-icon>remove_red_eye</mat-icon>{{ 'button_texts.preview_button' | translate}}</button>
+          <button class="btn btn-success ml-4 pl-1" mat-button (click)="addNewItem()" ><mat-icon *ngIf= "isNew">add</mat-icon> <mat-icon *ngIf="!isNew">edit</mat-icon>  {{ (isNew ? 'button_texts.add_button' : 'button_texts.column_buttons.edit_column_button' )|translate }}  </button>
         </div>
       </div>
     </div>

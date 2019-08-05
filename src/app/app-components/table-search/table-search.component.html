@@ -1,16 +1,16 @@
 
-<h5>Search in Content Management</h5>
+<h5>{{ 'labels_and_placeholders.header_over_search_input' | translate}}</h5>
 <div class="row mt-4">
   <div class="col-lg-3">
-    <input type="text" class="form-control" placeholder="Brand, node, manufacturer, model group ..." [(ngModel)]="keyWord" (input)="tableFilter()">
-    <i class="material-icons" matTooltip="In the search field you can enter the name of the brand, Node (n-000), Model group (mg-0000), Vehicle manufacturer (ma-0000)" matTooltipPosition="above" matTooltipClass="tooltippp">error_outline</i>
+    <input type="text" class="form-control" placeholder="{{ 'labels_and_placeholders.search_input_placeholder' | translate}}" [(ngModel)]="keyWord" (input)="tableFilter()">
+    <i class="material-icons" matTooltip="{{ 'labels_and_placeholders.search_input_helper' | translate}}" matTooltipPosition="above" matTooltipClass="tooltippp">error_outline</i>
   </div>
   <div class="col-lg-1">
     <button mat-button class="btn btn-dark" ><mat-icon class="material-icons ">search</mat-icon> </button>
   </div>
                  
   <div class="col-lg-8 text-right">
-    <button mat-button class="btn btn-success" (click)="openSEOmain(-1)"><mat-icon class="material-icons ">add </mat-icon> add new </button>
+    <button mat-button class="btn btn-success" (click)="openSEOmain(-1)"><mat-icon class="material-icons ">add </mat-icon> {{ 'button_texts.add_new_button' | translate}} </button>
   </div>
 </div>
 
@@ -20,22 +20,21 @@
     <div class="col ">
       <div class=" table-container ">
         <mat-table #table [dataSource]="dataSource" matSort class="table-striped">
-
           <ng-container matColumnDef="Target" >
-              <mat-header-cell *matHeaderCellDef [ngClass]="'small-column'" > Target </mat-header-cell>
+              <mat-header-cell *matHeaderCellDef [ngClass]="'small-column'" > {{ 'column_headers.target_column' | translate}} </mat-header-cell>
               <mat-cell *matCellDef="let element" [ngClass]="'small-column'">
                 {{element.Target_URL.split('/')[0]}} </mat-cell>
             </ng-container>
 
           <ng-container matColumnDef="Brand">
-            <mat-header-cell mat-sort-header *matHeaderCellDef > Brand </mat-header-cell>
+            <mat-header-cell mat-sort-header *matHeaderCellDef > {{ 'column_headers.brand_column' | translate}} </mat-header-cell>
             <mat-cell *matCellDef="let element" >
               {{element.Brand}} </mat-cell>
           </ng-container>
 
           <ng-container matColumnDef="Node">
             <mat-header-cell *matHeaderCellDef >
-              Node
+              {{ 'column_headers.node_column' | translate}}
             </mat-header-cell>
             <mat-cell *matCellDef="let element" >
               {{element.Node }} </mat-cell>
@@ -43,7 +42,7 @@
     
           <ng-container matColumnDef="Manufacturer">
             <mat-header-cell *matHeaderCellDef >
-              Vehicle manufacturer
+              {{ 'column_headers.manufacturer_column' | translate}}
             </mat-header-cell>
             <mat-cell *matCellDef="let element" >
               {{element.Manufacturer}} </mat-cell>
@@ -51,7 +50,7 @@
 
           <ng-container matColumnDef="Model_Group">
             <mat-header-cell *matHeaderCellDef >
-              Model Group
+              {{ 'column_headers.mg_column' | translate}}
             </mat-header-cell>
             <mat-cell *matCellDef="let element" >
               {{element.Model_Group}} </mat-cell>
@@ -59,7 +58,7 @@
 
           <ng-container matColumnDef="Target_URL">
             <mat-header-cell *matHeaderCellDef >
-              Target URL
+              {{ 'column_headers.target_URL_column' | translate}}
             </mat-header-cell>
             <mat-cell *matCellDef="let element" >
 
@@ -69,12 +68,13 @@
 
           <ng-container matColumnDef="Action">
             <div>
-              <mat-header-cell *matHeaderCellDef [ngClass]="'buttons-column'" >Action </mat-header-cell>
+              <mat-header-cell *matHeaderCellDef [ngClass]="'buttons-column'" >
+                {{ 'column_headers.action_column' | translate}} </mat-header-cell>
               <mat-cell *matCellDef="let element"  [ngClass]="'buttons-column'">
                 <div class="center">
                   
-                  <button mat-button class="btn blue btn-sm mx-1" (click)="openSEOmain(element.Id)"><mat-icon class="material-icons">edit</mat-icon>Edit </button>
-                  <button mat-button class="btn orange btn-sm mx-1" (click)= "removeItem(element.Id)"> <mat-icon class="material-icons">delete</mat-icon>Remove </button>
+                  <button mat-button class="btn blue btn-sm mx-1" (click)="openSEOmain(element.Id)"><mat-icon class="material-icons">edit</mat-icon>{{ 'button_texts.column_buttons.edit_column_button' | translate}}  </button>
+                  <button mat-button class="btn orange btn-sm mx-1" (click)= "removeItem(element.Id)"> <mat-icon class="material-icons">delete</mat-icon>{{ 'button_texts.column_buttons.delete_column_button' | translate}}  </button>
                 </div>
               </mat-cell>
             </div>
