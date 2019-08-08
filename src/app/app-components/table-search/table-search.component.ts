@@ -24,7 +24,7 @@ export class TableSearchComponent implements OnInit {
   constructor(public SEOmainDataDialog: MatDialog , public _dataService : DataService , private _translationService: TranslateService) { }
 
   ngOnInit() {
-    this.dataSource = new MatTableDataSource<TableItem>(this._dataService.get());
+    this._dataService.get().subscribe(res =>{ this.dataSource.data = res.data.items })
     this.dataSource.paginator = this.paginator;
     this.dataSource.sort = this.sort;
     this._translationService.stream('labels_and_placeholders.items_per_page_mat_info').subscribe(res=>{
@@ -34,11 +34,13 @@ export class TableSearchComponent implements OnInit {
   }
 
   tableFilter(){
-    this.dataSource.data = this._dataService.get().filter(item => (item.Model_Group.includes(this.keyWord) || item.Brand.includes(this.keyWord) || item.Node.includes(this.keyWord) || item.Manufacturer.includes(this.keyWord) ));
+    this._dataService.get().subscribe(res => this.dataSource.data = res.data.items.filter(item => (item.modelGroup.name.includes(this.keyWord) || item.displayBrand.name.includes(this.keyWord) || item.treeNode.name.includes(this.keyWord) || item.manufacturer.name.includes(this.keyWord) )));
   }
 
   openSEOmain(id: number){
-    var tmp:TableItem = this.dataSource.data.find(item=>item.Id === id.toString());;
+    var tmp:TableItem = this.dataSource.data.find(item=>item.id === id);
+    console.log(tmp);
+    console.log(this.dataSource.data);
     const dialogRef = this.SEOmainDataDialog.open(SeoMainComponent, {
       width: '800px',
       disableClose: true,
@@ -64,7 +66,7 @@ export class TableSearchComponent implements OnInit {
           this._translationService.instant('client_info_texts.removed_successfully_title'),
           'success'
         );
-        this._dataService.delete(id);
+        // this._dataService.delete(id); //TODO
         this.dataSource.data = this._dataService.get();
       } 
     })

@@ -23,13 +23,14 @@
           <ng-container matColumnDef="Target" >
               <mat-header-cell *matHeaderCellDef [ngClass]="'small-column'" > {{ 'column_headers.target_column' | translate}} </mat-header-cell>
               <mat-cell *matCellDef="let element" [ngClass]="'small-column'">
-                {{element.Target_URL.split('/')[0]}} </mat-cell>
+                {{element.cmsContentType == '1' ? 'search':'category'}} 
+              </mat-cell>
             </ng-container>
 
           <ng-container matColumnDef="Brand">
             <mat-header-cell mat-sort-header *matHeaderCellDef > {{ 'column_headers.brand_column' | translate}} </mat-header-cell>
             <mat-cell *matCellDef="let element" >
-              {{element.Brand}} </mat-cell>
+              {{element.displayBrand.name}} </mat-cell>
           </ng-container>
 
           <ng-container matColumnDef="Node">
@@ -37,7 +38,7 @@
               {{ 'column_headers.node_column' | translate}}
             </mat-header-cell>
             <mat-cell *matCellDef="let element" >
-              {{element.Node }} </mat-cell>
+              {{element.treeNode.name }} </mat-cell>
           </ng-container>
     
           <ng-container matColumnDef="Manufacturer">
@@ -45,7 +46,7 @@
               {{ 'column_headers.manufacturer_column' | translate}}
             </mat-header-cell>
             <mat-cell *matCellDef="let element" >
-              {{element.Manufacturer}} </mat-cell>
+              {{element.manufacturer.name}} </mat-cell>
           </ng-container>
 
           <ng-container matColumnDef="Model_Group">
@@ -53,7 +54,7 @@
               {{ 'column_headers.mg_column' | translate}}
             </mat-header-cell>
             <mat-cell *matCellDef="let element" >
-              {{element.Model_Group}} </mat-cell>
+              {{element.modelGroup.name}} </mat-cell>
           </ng-container>
 
           <ng-container matColumnDef="Target_URL">
@@ -61,8 +62,9 @@
               {{ 'column_headers.target_URL_column' | translate}}
             </mat-header-cell>
             <mat-cell *matCellDef="let element" >
-
-              <span>{{ element.Target_URL}}</span>
+              <span>
+                {{element.cmsContentType == '1' ? 'search':'category'}}/ m-{{element.manufacturer.id}}/ mg-{{element.modelGroup.id}}/ {{element.displayBrand.name}}/ {{element.treeNode.name}}
+              </span>
             </mat-cell>
           </ng-container>
 
@@ -73,8 +75,9 @@
               <mat-cell *matCellDef="let element"  [ngClass]="'buttons-column'">
                 <div class="center">
                   
-                  <button mat-button class="btn blue btn-sm mx-1" (click)="openSEOmain(element.Id)"><mat-icon class="material-icons">edit</mat-icon>{{ 'button_texts.column_buttons.edit_column_button' | translate}}  </button>
-                  <button mat-button class="btn orange btn-sm mx-1" (click)= "removeItem(element.Id)"> <mat-icon class="material-icons">delete</mat-icon>{{ 'button_texts.column_buttons.delete_column_button' | translate}}  </button>
+                  <button mat-button class="btn blue btn-sm mx-1" (click)="openSEOmain(element.id)"><mat-icon class="material-icons">edit</mat-icon>{{ 'button_texts.column_buttons.edit_column_button' | translate}}  </button>
+                  <button mat-button class="btn orange btn-sm mx-1" (click)= "removeItem(element.id)"> <mat-icon class="material-icons">delete</mat-icon>{{ 'button_texts.column_buttons.delete_column_button' | translate}}  </button>
+                  <button mat-button class="btn yellow mx-1" (click)= "cmsContent(element.id)"> <mat-icon class="material-icons">arrow_forward</mat-icon></button>
                 </div>
               </mat-cell>
             </div>

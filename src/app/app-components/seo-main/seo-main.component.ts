@@ -7,6 +7,7 @@ import { Subject, ReplaySubject } from 'rxjs';
 import { take, takeUntil } from 'rxjs/operators';
 import Swal, {SweetAlertType} from 'sweetalert2';
 import 'rxjs';
+import { SelectItem } from 'src/app/models/selectItem';
 
 @Component({
   selector: 'seo-main',
@@ -21,10 +22,10 @@ export class SeoMainComponent implements OnInit {
   public manuFilterCtrl: FormControl = new FormControl();
   public mgFilterCtrl: FormControl = new FormControl();
 
-  public filteredBrands: ReplaySubject<string[]> = new ReplaySubject<string[]>(1);
-  public filteredNodes: ReplaySubject<string[]> = new ReplaySubject<string[]>(1);
-  public filteredManus: ReplaySubject<string[]> = new ReplaySubject<string[]>(1);
-  public filteredMgs: ReplaySubject<string[]> = new ReplaySubject<string[]>(1);
+  public filteredBrands: ReplaySubject<SelectItem[]> = new ReplaySubject<SelectItem[]>(1);
+  public filteredNodes: ReplaySubject<SelectItem[]> = new ReplaySubject<SelectItem[]>(1);
+  public filteredManus: ReplaySubject<SelectItem[]> = new ReplaySubject<SelectItem[]>(1);
+  public filteredMgs: ReplaySubject<SelectItem[]> = new ReplaySubject<SelectItem[]>(1);
 
   @ViewChild('linkElement') singleSelect;
 
@@ -36,10 +37,10 @@ export class SeoMainComponent implements OnInit {
   public isNew: boolean = true;
   public inValids: string[] = [];
 
-  public brands :string[] ;
-  public nodes :string[] ;
-  public manus :string[] ;
-  public mgs :string[] ;
+  public brands :SelectItem[] ;
+  public nodes :SelectItem[] ;
+  public manus :SelectItem[] ;
+  public mgs :SelectItem[] ;
 
   constructor(public dialogRef: MatDialogRef<SeoMainComponent>,@Inject(MAT_DIALOG_DATA) public data: any , public _dataService :DataService) { 
     if (data.item){
@@ -50,16 +51,23 @@ export class SeoMainComponent implements OnInit {
 
   ngOnInit() {
     this.targetURL = 'search';
-    this.brands = this._dataService.getBrands();
-    this.nodes = this._dataService.getNodes();
-    this.manus = this._dataService.getManu();
+    this.brands = this._dataService.getBrands().subscribe(res => { 
+      this.brands = res.data.items 
+      this.filteredBrands.next(this.brands.slice());
+    } );
+    this.nodes = this._dataService.getNodes().subscribe(res =>{
+      this.nodes = res.data.items
+      this.filteredNodes.next(this.nodes.slice());
+    });
+    this.manus = this._dataService.getManu().subscribe(res =>{
+      this.manus = res.data.items
+      this.filteredManus.next(this.manus.slice());
+    });
     
-    if(!this.isNew)
-      this.getMG(this.currentItem.Manufacturer);
-
-    this.filteredBrands.next(this.brands.slice());
-    this.filteredNodes.next(this.nodes.slice());
-    this.filteredManus.next(this.manus.slice());
+    if(!this.isNew){
+      // this.getMG(this.currentItem.Manufacturer);
+      this.getMG(9960);
+    }
 
     this.brandFilterCtrl.valueChanges.pipe(takeUntil(this._onDestroy)).subscribe(() => {
         this.filtering(this.brands , this.brandFilterCtrl.value , this.filteredBrands);
@@ -72,15 +80,20 @@ export class SeoMainComponent implements OnInit {
         this.filtering(this.manus , this.manuFilterCtrl.value , this.filteredManus);
       });
 
-    
 
 
   }
 
-  getMG(key:string){
-    this.mgs = this._dataService.getMg(key);
+  getMG(key:number){
+   
+    console.log(key);
+    
+    this.mgs = this._dataService.getMg(key).subscribe(res => {
+      this.mgs = res.data.items
+      this.filteredMgs.next(this.mgs.slice());
+      console.log(this.mgs)
+    });
 
-    this.filteredMgs.next(this.mgs.slice());
     this.mgFilterCtrl.valueChanges.pipe(takeUntil(this._onDestroy)).subscribe(() => {
       this.filtering(this.mgs, this.mgFilterCtrl.value , this.filteredMgs);
     });
@@ -106,10 +119,10 @@ export class SeoMainComponent implements OnInit {
     );
   }
 
-  // qwe(){
-  //   console.log(this.inValids);
-  //   console.log(this.currentItem);
-  // }
+  qwe(){
+    // console.log(this.inValids);
+    console.log(this.currentItem);
+  }
 
   close(): void {
     this.dialogRef.close();
@@ -133,16 +146,16 @@ export class SeoMainComponent implements OnInit {
   addNewItem(){
     this.validator();
     if ( this.inValids.length == 0 ){
-      this.currentItem.Target_URL = this.singleSelect.nativeElement.innerText;
-      if(this.isNew)
-        this._dataService.set(this.currentItem);
-      else
-        this._dataService.edit(this.currentItem);
+      // this.currentItem.Target_URL = this.singleSelect.nativeElement.innerText;
+      // if(this.isNew)
+      //   this._dataService.set(this.currentItem);
+      // else
+      //   this._dataService.edit(this.currentItem);
       this.close();
     }
   }
 
   preview(){
-    Swal.fire(this.currentItem.Target_URL);
+    Swal.fire(this.currentItem.displayBrand.name);
   }
 }

@@ -78,9 +78,14 @@ mat-header-row {
     background-color: #039cfd;
     color:white;
 }
+.yellow{
+    background-color: #929220;
+    color:white;
+    min-width: 50px !important;
+}
 
 .buttons-column{
-    flex: 0 0 300px;
+    flex: 0 0 350px;
 }
 
 .small-column{
