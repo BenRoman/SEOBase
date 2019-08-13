@@ -18,7 +18,13 @@
       "removing_question_text": "Ви впевнені?",
       "removing_details_text": "Ви не зможете відновити видалений вміст!",
       "removed_successfully_title": "Видалення пройшло успішно.",
-      "remove_modal_title": "Видалено!"
+      "remove_modal_title": "Видалено!",
+      "edited_successfully_title": "Редагування пройшло успішно.",
+      "edit_modal_title": "Редаговано!",
+      "added_successfully_title": "Додавання пройшло успішно.",
+      "add_modal_title": "Додано!",
+      "error_title": "блет",
+      "error_modal_title": "пздц ерора"
     },
     "column_headers": {
       "target_column": "Ціль",

@@ -17,6 +17,16 @@ export class DataService extends SeoContentBaseService {
   
   private static _seoContentGetUrl = 'seocontent';
 
+  private static _seoContentGetBrandsUrl = '/brands';
+  private static _seoContentGetNodesUrl = '/nodes';
+  private static _seoContentGetManusUrl = '/manufacturer';
+  private static _seoContentGetMgsUrl = '/model_groups';
+
+  private static _seoDeleteTableItemUrl = '/delete/';
+  private static _seoEditTableItemUrl = '/edit';
+  private static _seoAddTableItemUrl = '/add';
+
+
   // items: TableItem[] = [
 
   //   {
@@ -83,43 +93,62 @@ export class DataService extends SeoContentBaseService {
   get():any{
     let headers = new HttpHeaders({'Content-Type': 'application/json'});
     return this.http.get( this.getUrl(DataService._seoContentGetUrl) , {headers:headers});
-    // return this.items;
   }
 
-  // set(itemForSet: TableItem) {
-  //   this.items.push(itemForSet);
-  // }
+  set(itemForSet: TableItem) {
+    const headers = new HttpHeaders({'Content-Type': 'application/json'});
+    return this.http.patch(this.getUrl(DataService._seoContentGetUrl + DataService._seoAddTableItemUrl), JSON.stringify(
+      {
+        Id : itemForSet.id ,
+        CMSId : itemForSet.cmsContentId , 
+        CMSType : itemForSet.cmsContentType , 
+        ManuId : itemForSet.manufacturer.id , 
+        MGId : itemForSet.modelGroup.id , 
+        BrandId : itemForSet.displayBrand.id , 
+        NodeId : itemForSet.treeNode.id , 
+        Memo : itemForSet.memo
+      }), {headers: headers});
+  }
 
-  // edit(itemForEdit: TableItem) {
-  //   this.items[this.items.indexOf(this.items.find(item => item.id == itemForEdit.id))] = itemForEdit;
-  // }
+  edit(itemForEdit: TableItem) {
+    const headers = new HttpHeaders({'Content-Type': 'application/json'});
+    return this.http.patch(this.getUrl(DataService._seoContentGetUrl + DataService._seoEditTableItemUrl), JSON.stringify(
+      {
+        Id : itemForEdit.id ,
+        CMSId : itemForEdit.cmsContentId , 
+        CMSType : itemForEdit.cmsContentType , 
+        ManuId : itemForEdit.manufacturer.id , 
+        MGId : itemForEdit.modelGroup.id , 
+        BrandId : itemForEdit.displayBrand.id , 
+        NodeId : itemForEdit.treeNode.id , 
+        Memo : itemForEdit.memo
+      }), {headers: headers});
+  }
 
-  // delete(id: string) {
-  //   this.items = this.items.filter(item => item.id != id.toString());
-  // }
+  delete(id: string) {
+    const headers = new HttpHeaders({'Content-Type': 'application/json'});
+    return this.http.patch(this.getUrl(DataService._seoContentGetUrl + DataService._seoDeleteTableItemUrl + id), JSON.stringify(id), {headers: headers});
+    // this.items = this.items.filter(item => item.id != id.toString());
+  }
 
   getBrands(): any {
-    // return brandsDATA;
     let headers = new HttpHeaders({'Content-Type': 'application/json'});
-    return this.http.get( this.getUrl(DataService._seoContentGetUrl + '/brands') , {headers:headers});
+    return this.http.get( this.getUrl(DataService._seoContentGetUrl + DataService._seoContentGetBrandsUrl) , {headers:headers});
 
   }
 
   getNodes(): any{
     let headers = new HttpHeaders({'Content-Type': 'application/json'});
-    return this.http.get( this.getUrl(DataService._seoContentGetUrl + '/nodes') , {headers:headers});
-    // return nodeDATA;
+    return this.http.get( this.getUrl(DataService._seoContentGetUrl + DataService._seoContentGetNodesUrl) , {headers:headers});
   }
   getManu(): any {
     let headers = new HttpHeaders({'Content-Type': 'application/json'});
-    return this.http.get( this.getUrl(DataService._seoContentGetUrl + '/manufacturer') , {headers:headers});
-    // return manuDATA;
+    return this.http.get( this.getUrl(DataService._seoContentGetUrl + DataService._seoContentGetManusUrl) , {headers:headers});
   }
 
   getMg(key: number): any {
     let headers = new HttpHeaders({'Content-Type': 'application/json'});
-    return this.http.get( this.getUrl(DataService._seoContentGetUrl + '/model_groups/' + key) , {headers:headers});
-    // return mgDATA;
+    return this.http.get( this.getUrl(DataService._seoContentGetUrl + DataService._seoContentGetMgsUrl + '/'+ key) , {headers:headers});
   }
 
 }

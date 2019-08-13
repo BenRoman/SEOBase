@@ -27,11 +27,6 @@ mat-cell span {
     margin: auto;
 }
 
-
-.form-control{
-    border-radius: 0.25rem 0 0 0.25rem;
-}
-
 .col-lg-3{
     padding-right: 0;
 }
@@ -59,13 +54,18 @@ mat-header-row {
 }
 
 .center .mat-button{
-    min-width: 100px;
     line-height: 30px;
+    padding :0 10px !important;
 }
 
 .center .material-icons {
     font-size: 17px;
     margin-top: 4px;
+    margin-left: -6px;
+}
+
+.just-cent{
+    justify-content: center;
 }
 
 
@@ -78,8 +78,8 @@ mat-header-row {
     background-color: #039cfd;
     color:white;
 }
-.yellow{
-    background-color: #929220;
+.arrow{
+    background-color: #343a40;
     color:white;
     min-width: 50px !important;
 }

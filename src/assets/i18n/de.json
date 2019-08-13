@@ -18,7 +18,13 @@
       "removing_question_text": "",
       "removing_details_text": "",
       "removed_successfully_title": "",
-      "remove_modal_title": ""
+      "remove_modal_title": "",
+      "edited_successfully_title": "",
+      "edit_modal_title": "",
+      "added_successfully_title": "",
+      "add_modal_title": "",
+      "error_title": "",
+      "error_modal_title": ""
     },
     "column_headers": {
       "target_column": "",
@@ -50,8 +56,8 @@
       }
     },
     "validation_labels":{
-      "empty_creation":"Виберіть хоч щось",
-      "required_field":"Надо заповнити"
+      "empty_creation":"",
+      "required_field":""
     }
   }
   

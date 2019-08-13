@@ -8,7 +8,7 @@
 
     </div>
     <div class="card-body">
-
+      <link rel="stylesheet" [href]='cssUrl'>
 
       <div class="float-right ">
         <span class="mr-2">
@@ -22,6 +22,7 @@
             <flag-icon country="ua" class="language-clickable mx-1" (click)="setLanguage('ua')">de</flag-icon>
           </label>
         </span>
+        <mat-slide-toggle color="secondary" [(ngModel)]="useDark"><span>{{selectedTheme.name}}</span></mat-slide-toggle>
       </div>
 
       <table-search></table-search>

@@ -18,7 +18,13 @@
       "removing_question_text": "Are you sure?",
       "removing_details_text": "You will not be able to recover this item!",
       "removed_successfully_title": "Your item has been deleted.",
-      "remove_modal_title": "Deleted!"
+      "remove_modal_title": "Deleted!",
+      "edited_successfully_title": "Your item has been edited.",
+      "edit_modal_title": "Edited!",
+      "added_successfully_title": "Your item has been added.",
+      "add_modal_title": "Added!",
+      "error_title": "something gone wrong.",
+      "error_modal_title": "Try again!"
     },
     "column_headers": {
       "target_column": "Target",

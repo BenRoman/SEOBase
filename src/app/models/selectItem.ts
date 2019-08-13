@@ -1,7 +1,7 @@
 export class SelectItem{
 
     id : number
-    name : string;
+    public name : string;
     
     constructor() {}
  
