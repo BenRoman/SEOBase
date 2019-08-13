@@ -1,0 +1,220 @@
+body {
+  background-color: rgb(57, 67, 72) !important;
+  color: white;
+}
+
+input {
+  background-color: rgba(166, 166, 166, 0.76) !important;
+  color: white;
+  border-width: 1px;
+  border-color: rgb(182, 182, 182) !important;
+  border-style:  double;
+}
+
+h3 {
+  background-color: rgba(0, 12, 98, 0.33);
+  color: white;
+  padding: 14px 25px;
+  text-align: center;
+  font-size: 22px;
+  text-decoration: none;
+  display: inline-block;
+}
+
+.swal2-popup{
+  background-color: rgb(212, 217, 216);
+  border-radius: 0;
+}
+
+.mat-dialog-container{
+  background-color: #b5b5b5;
+  border-radius: 0;
+}
+
+.mat-cell ,.mat-select-value  {
+  color:white;
+}
+.mat-form-field-appearance-legacy .mat-hint{
+  color: white;
+}
+.mat-form-field-appearance-legacy .mat-form-field-label{
+  color: white;
+}
+.mat-form-field-appearance-legacy.mat-form-field-can-float .mat-input-server:focus+.mat-form-field-label-wrapper .mat-form-field-label, .mat-form-field-appearance-legacy.mat-form-field-can-float.mat-form-field-should-float .mat-form-field-label{
+  color: #ddd;
+}
+.mat-input-element{
+  background-color: transparent !important;
+}
+.mat-form-field.mat-focused .mat-form-field-ripple {
+  background-color:black;
+}
+.mat-form-field.mat-focused.mat-primary .mat-select-arrow{
+  color: white;
+}
+.mat-checkbox-checked.mat-primary .mat-checkbox-background{
+  background-color: black;
+}
+
+.mat-checkbox-background {
+  background-color: rgba(100, 99, 102, 0.85) ;
+}
+
+.mat-select-panel , .dropdown-list , .dropdown-list input{
+  background-color: #D0D0D0 !important;
+}
+
+.bg-danger{
+  background-color: rgba(224, 58, 58, 0.75) !important;
+}
+
+.bg-warning{
+  background-color: rgba(239 , 129, 74, 1) !important;
+}
+
+.bg-success{
+  background-color: rgba(67, 179, 108, 0.75) !important;
+}
+
+.bg-primary{
+  background-color: rgba(15, 113, 187, 0.9) !important;
+}
+
+.btn-danger{
+  background-color: rgba(210, 82, 82, 0.75) !important;
+}
+
+.btn-warning{
+  background-color: rgba(220, 202, 5, 0.6) !important;
+}
+
+.btn-success{
+  background-color: rgba(67, 179, 108, 0.9) !important;
+}
+
+.btn-info{
+  background-color: rgba(104, 151, 187, 0.9) !important;
+}
+
+.btn-primary{
+  background-color: rgba(70, 124, 202, 0.9) !important;
+}
+.mat-header-row , .mat-paginator{
+  background: #bbbbbb;
+}
+
+
+.mat-table{
+  background: #3c3c3c;
+  border-color: #555555;
+  border-width: 1px;
+}
+/* .mat-paginator{
+  background: #fbfbfb;
+} */
+
+.mat-row:hover {
+  background-color: #A9B7C6
+}
+
+.modified-row{
+  background-color: #aaaaaa;
+  border-top-width: 1px;
+  border-bottom-width: 1px;
+  border-color: #A9B7C6;
+}
+
+.card{
+  border-radius: 0 !important;
+  background-color: rgba(40, 40, 40, .8) !important;
+}
+
+.card .card-body{
+  border-radius: 0 !important;
+  background: #3c3c3c;
+}
+
+.btn{
+  border-radius: 0 !important;
+}
+
+.card-hader{
+  border-radius: 0 !important;
+  background-color: rgba(31, 38, 59, 0.54) !important;
+
+}
+
+.progress {
+  border-radius: 0 !important;
+  background-color: rgba(201, 201, 201, 0.51);
+  border-width: 1px!important;
+  border-color: #666666!important;
+}
+
+.atp-link{
+  color: white;
+  padding: 5px 25px;
+  text-align: center;
+  font-size: 16px;
+  text-decoration: none;
+  display: inline-block;
+
+}
+
+.info-block{
+  height:120px;
+  border:1px solid #666666;
+}
+
+.info-block h6:hover{
+  background-color: #A9B7C6
+}
+
+.mat-slide-toggle.mat-checked:not(.mat-disabled) .mat-slide-toggle-thumb {
+  background-color: black;
+}
+
+.mat-slide-toggle.mat-checked:not(.mat-disabled) .mat-slide-toggle-bar{
+  background-color: #6c757d;
+}
+
+.mat-slide-toggle.mat-checked:not(.mat-disabled) .mat-ripple-element{
+  background-color: #6c757d;
+}
+
+.mat-select-value{
+  color:white
+}
+.mat-icon-button ,.mat-paginator-range-label ,.mat-paginator-page-size-label , .mat-paginator .mat-select-value{
+  color:black;
+}
+.mat-select-panel{
+  border-radius: 0px;
+}
+
+.multiselect-dropdown{
+  border: 1px solid #000000;
+  border-radius: 4px
+}
+
+.multiselect-dropdown .dropdown-btn{
+  color: white;
+}
+
+.c-btn {
+  color:white;
+}
+
+.selected-list .c-angle-down svg, .selected-list .c-angle-up svg {
+  fill: black;
+}
+.dropdown-list , .dropdown-list input{
+  background-color: transparent !important;
+}
+
+.list-filter input {
+  color:black;
+}
+.list-area{
+  color: black;
+}
