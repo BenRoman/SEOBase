@@ -16,8 +16,8 @@ export class AppComponent {
   selectedTheme: Theme;
   selectedLanguageIso: string;
   public themes: Theme[] = [
-    { name: 'Light', relUri: 'src/styles.css' },
-    { name: 'Metro', relUri: 'src/styles.css' }
+    { name: 'Light', relUri: '/assets/css/themes/default.css' },
+    { name: 'Metro', relUri: '/assets/css/themes/metro-dark.css' }
   ];
 
   private _useDark: boolean;
@@ -29,7 +29,6 @@ export class AppComponent {
     this.selectedTheme = value?this.themes[1]:this.themes[0];
     this.cssUrl = this.sanitizer.bypassSecurityTrustResourceUrl(this.selectedTheme.relUri);
     this.cookieService.set(AppComponent.USE_THEME_COOKIE_KEY, this.selectedTheme.name, 7);
-    console.log(this.cssUrl);
   }
 
   constructor(private sanitizer: DomSanitizer, private cookieService: CookieService, private _translate: TranslateService) {
