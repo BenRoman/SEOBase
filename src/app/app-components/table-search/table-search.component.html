@@ -1,91 +1,113 @@
-<h5>{{ 'labels_and_placeholders.header_over_search_input' | translate}}</h5>
-<div class="row mt-4">
-  <div class="col-lg-3">
-    <input type="text" class="form-control" placeholder="{{ 'labels_and_placeholders.search_input_placeholder' | translate}}" [(ngModel)]="keyWord" (input)="tableFilter()">
-    <i class="material-icons" matTooltip="{{ 'labels_and_placeholders.search_input_helper' | translate}}" matTooltipPosition="above" matTooltipClass="tooltippp">error_outline</i>
-  </div>
-  <div class="col-lg-1">
-    <!-- <button mat-button class="btn btn-dark" ><mat-icon class="material-icons ">search</mat-icon> </button> -->
-  </div>
-  <div class="col-lg-8 text-right">
-    <button mat-button class="btn btn-success" (click)="openSEOmain(-1)"><mat-icon class="material-icons ">add </mat-icon> {{ 'button_texts.add_new_button' | translate}} </button>
-  </div>
+<div class=" loader-container" *ngIf="seoLoading"><i class="fa-3x fa fa-spinner fa-pulse"></i>
+  <p><strong>Loading content...</strong></p>
 </div>
 
-<div class="mt-3">
-  <div class="row ">
-    <div class="col ">
-      <div class=" table-container ">
-        <mat-table #table [dataSource]="dataSource" matSort (matSortChange)="sortData($event)" class="table-striped">
-          <ng-container matColumnDef="Target" >
-              <mat-header-cell *matHeaderCellDef [ngClass]="'small-column'" > {{ 'column_headers.target_column' | translate}} </mat-header-cell>
+<div [ngClass]="{'invisible' : seoLoading }">
+
+  <h5>{{ 'labels_and_placeholders.header_over_search_input' | translate}}</h5>
+  <div class="row mt-4">
+    <div class="col-lg-3">
+      <input type="text" class="form-control"
+        placeholder="{{ 'labels_and_placeholders.search_input_placeholder' | translate}}" [(ngModel)]="keyWord"
+        (input)="tableFilter()">
+      <i class="material-icons" matTooltip="{{ 'labels_and_placeholders.search_input_helper' | translate}}"
+        matTooltipPosition="above" matTooltipClass="tooltippp">error_outline</i>
+    </div>
+    <div class="col-lg-1">
+      <!-- <button mat-button class="btn btn-dark" ><mat-icon class="material-icons ">search</mat-icon> </button> -->
+    </div>
+    <div class="col-lg-8 text-right">
+      <button mat-button class="btn btn-success" (click)="openSEOmain(-1)">
+        <mat-icon class="material-icons ">add </mat-icon> {{ 'button_texts.add_new_button' | translate}}
+      </button>
+    </div>
+  </div>
+
+  <div class="mt-3">
+    <div class="row ">
+      <div class="col ">
+        <div class=" table-container ">
+          <mat-table #table [dataSource]="dataSource" matSort (matSortChange)="sortData($event)" class="table-striped">
+            <ng-container matColumnDef="Target">
+              <mat-header-cell *matHeaderCellDef [ngClass]="'small-column'">
+                {{ 'column_headers.target_column' | translate}} </mat-header-cell>
               <mat-cell *matCellDef="let element" [ngClass]="'small-column'">
-                {{element.cmsContentType == '1' ? 'search':'category'}} 
+                {{element.cmsContentType == '1' ? 'search':'category'}}
               </mat-cell>
             </ng-container>
 
-          <ng-container matColumnDef="Brand">
-            <mat-header-cell mat-sort-header="brand" *matHeaderCellDef > {{ 'column_headers.brand_column' | translate}} </mat-header-cell>
-            <mat-cell *matCellDef="let element" >
-              {{element.displayBrand.name}} </mat-cell>
-          </ng-container>
+            <ng-container matColumnDef="Brand">
+              <mat-header-cell mat-sort-header="brand" *matHeaderCellDef> {{ 'column_headers.brand_column' | translate}}
+              </mat-header-cell>
+              <mat-cell *matCellDef="let element">
+                {{element.displayBrand.name}} </mat-cell>
+            </ng-container>
 
-          <ng-container matColumnDef="Node">
-            <mat-header-cell mat-sort-header="node" *matHeaderCellDef >
-              {{ 'column_headers.node_column' | translate}}
-            </mat-header-cell>
-            <mat-cell *matCellDef="let element" >
-              {{element.treeNode.name }} </mat-cell>
-          </ng-container>
-    
-          <ng-container matColumnDef="Manufacturer">
-            <mat-header-cell mat-sort-header="manu" *matHeaderCellDef >
-              {{ 'column_headers.manufacturer_column' | translate}}
-            </mat-header-cell>
-            <mat-cell *matCellDef="let element" >
-              {{element.manufacturer.name}} </mat-cell>
-          </ng-container>
+            <ng-container matColumnDef="Node">
+              <mat-header-cell mat-sort-header="node" *matHeaderCellDef>
+                {{ 'column_headers.node_column' | translate}}
+              </mat-header-cell>
+              <mat-cell *matCellDef="let element">
+                {{element.treeNode.name }} </mat-cell>
+            </ng-container>
 
-          <ng-container matColumnDef="Model_Group">
-            <mat-header-cell mat-sort-header="mg" *matHeaderCellDef >
-              {{ 'column_headers.mg_column' | translate}}
-            </mat-header-cell>
-            <mat-cell *matCellDef="let element" >
-              {{element.modelGroup.name}} </mat-cell>
-          </ng-container>
+            <ng-container matColumnDef="Manufacturer">
+              <mat-header-cell mat-sort-header="manu" *matHeaderCellDef>
+                {{ 'column_headers.manufacturer_column' | translate}}
+              </mat-header-cell>
+              <mat-cell *matCellDef="let element">
+                {{element.manufacturer.name}} </mat-cell>
+            </ng-container>
 
-          <ng-container matColumnDef="Target_URL">
-            <mat-header-cell *matHeaderCellDef >
-              {{ 'column_headers.target_URL_column' | translate}}
-            </mat-header-cell>
-            <mat-cell *matCellDef="let element" >
-              <span>
-                {{element.cmsContentType == '1' ? 'search':'category'}}{{element.manufacturer.id ?"/ m-" + element.manufacturer.id : ""}}{{element.modelGroup.id? "/ mg-" + element.modelGroup.id : ""}}{{element.displayBrand.name? "/ " + element.displayBrand.name : ""}}{{element.treeNode.name ? "/ " + element.treeNode.name : ""}}
-              </span>
-            </mat-cell>
-          </ng-container>
+            <ng-container matColumnDef="Model_Group">
+              <mat-header-cell mat-sort-header="mg" *matHeaderCellDef>
+                {{ 'column_headers.mg_column' | translate}}
+              </mat-header-cell>
+              <mat-cell *matCellDef="let element">
+                {{element.modelGroup.name}} </mat-cell>
+            </ng-container>
 
-          <ng-container matColumnDef="Action">
-            <div>
-              <mat-header-cell *matHeaderCellDef [ngClass]="'buttons-column just-cent'" >
-                {{ 'column_headers.action_column' | translate}} </mat-header-cell>
-              <mat-cell *matCellDef="let element"  [ngClass]="'buttons-column'">
-                <div class="center">
-                  <button mat-button class="btn blue btn-sm mx-1" (click)="openSEOmain(element.id)"><mat-icon class="material-icons">edit</mat-icon>{{ 'button_texts.column_buttons.edit_column_button' | translate}}  </button>
-                  <button mat-button class="btn orange btn-sm mx-1" (click)= "removeItem(element.id)"> <mat-icon class="material-icons">delete</mat-icon>{{ 'button_texts.column_buttons.delete_column_button' | translate}}  </button>
-                  <button mat-button class="btn arrow mx-1" (click)= "cmsContent(element.id)"> <mat-icon class="material-icons">arrow_forward</mat-icon>View</button>
-                </div>
+            <ng-container matColumnDef="Target_URL">
+              <mat-header-cell *matHeaderCellDef>
+                {{ 'column_headers.target_URL_column' | translate}}
+              </mat-header-cell>
+              <mat-cell *matCellDef="let element">
+                <span>
+                  {{element.cmsContentType == '1' ? 'search':'category'}}{{element.manufacturer.id ?"/ m-" + element.manufacturer.id : ""}}{{element.modelGroup.id? "/ mg-" + element.modelGroup.id : ""}}{{element.displayBrand.name? "/ " + element.displayBrand.name : ""}}{{element.treeNode.name ? "/ " + element.treeNode.name : ""}}
+                </span>
               </mat-cell>
-            </div>
-          </ng-container>
+            </ng-container>
 
-          <mat-header-row *matHeaderRowDef="displayedColumns;sticky: true"></mat-header-row>
-          <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
-          <mat-footer-row> </mat-footer-row>
-        </mat-table>
+            <ng-container matColumnDef="Action">
+              <div>
+                <mat-header-cell *matHeaderCellDef [ngClass]="'buttons-column just-cent'">
+                  {{ 'column_headers.action_column' | translate}} </mat-header-cell>
+                <mat-cell *matCellDef="let element" [ngClass]="'buttons-column'">
+                  <div class="center">
+                    <button mat-button class="btn blue btn-sm mx-1" (click)="openSEOmain(element.id)">
+                      <mat-icon class="material-icons">edit</mat-icon>
+                      {{ 'button_texts.column_buttons.edit_column_button' | translate}}
+                    </button>
+                    <button mat-button class="btn orange btn-sm mx-1" (click)="removeItem(element.id)">
+                      <mat-icon class="material-icons">delete</mat-icon>
+                      {{ 'button_texts.column_buttons.delete_column_button' | translate}}
+                    </button>
+                    <button mat-button class="btn arrow mx-1" (click)="cmsContent(element.id)">
+                      <mat-icon class="material-icons">arrow_forward</mat-icon>View
+                    </button>
+                  </div>
+                </mat-cell>
+              </div>
+            </ng-container>
 
+            <mat-header-row *matHeaderRowDef="displayedColumns;sticky: true"></mat-header-row>
+            <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
+            <mat-footer-row> </mat-footer-row>
+          </mat-table>
+
+        </div>
+        <mat-paginator [pageSizeOptions]="itemsPerPage" showFirstLastButtons></mat-paginator>
       </div>
-      <mat-paginator [pageSizeOptions]="itemsPerPage" showFirstLastButtons></mat-paginator>
     </div>
   </div>
 </div>

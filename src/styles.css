@@ -85,3 +85,17 @@ table-search > div > div > button{
     -webkit-transform: translate3d(4px, 0, 0);
     transform: translate3d(4px, 0, 0); } 
 }
+
+.loader-container{
+    margin-top: 10px;
+    text-align: center;
+}
+  
+.loader-container p{
+    margin-top: 10px;
+}
+.loader-container i{
+    display: block;
+    margin: auto;
+    width: 50px;
+}

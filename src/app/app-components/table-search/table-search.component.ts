@@ -21,12 +21,13 @@ export class TableSearchComponent implements OnInit {
   itemsPerPage: number[] = [5, 25, 100];
   dataSource = new MatTableDataSource<TableItem>();
   keyWord:string = "";
-
+  seoLoading:boolean = true;
   constructor(public SEOmainDataDialog: MatDialog , public _dataService : DataService , private _translationService: TranslateService) { }
 
   ngOnInit() {
     this._dataService.get().subscribe(res =>{ 
       this.dataSource.data = res.data.items
+      this.seoLoading = false
     })
     this.dataSource.paginator = this.paginator;
     this._translationService.stream('labels_and_placeholders.items_per_page_mat_info').subscribe(res=>{
@@ -38,10 +39,10 @@ export class TableSearchComponent implements OnInit {
 
   tableFilter(){
     this._dataService.get().subscribe(res => this.dataSource.data = res.data.items.filter(item => (
-      ( item.modelGroup.name?item.modelGroup.name.includes(this.keyWord) : false ) || 
-      ( item.displayBrand.name?item.displayBrand.name.includes(this.keyWord) : false ) || 
-      ( item.treeNode.name?item.treeNode.name.includes(this.keyWord) : false ) || 
-      ( item.manufacturer.name?item.manufacturer.name.includes(this.keyWord) : false)
+      ( item.modelGroup.name?item.modelGroup.name.toLowerCase().includes(this.keyWord.toLowerCase()) : false ) || 
+      ( item.displayBrand.name?item.displayBrand.name.toLowerCase().includes(this.keyWord.toLowerCase()) : false ) || 
+      ( item.treeNode.name?item.treeNode.name.toLowerCase().includes(this.keyWord.toLowerCase()) : false ) || 
+      ( item.manufacturer.name?item.manufacturer.name.toLowerCase().includes(this.keyWord.toLowerCase()) : false)
     )));
   }
 

@@ -53,8 +53,6 @@ export class SeoMainComponent implements OnInit {
         this.brands = results[0].data.items;
         this.nodes = results[1].data.items;
         this.manus = results[2].data.items;
-        console.log(results);
-        console.log(this.brands);
 
         this.filteredBrands.next(this.brands.slice());
         this.filteredNodes.next(this.nodes.slice());
