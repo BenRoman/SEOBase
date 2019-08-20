@@ -1,5 +1,5 @@
 import { Component, OnInit, Inject, ViewChild } from '@angular/core';
-import { MatDialogRef, MAT_DIALOG_DATA, MatSelect } from '@angular/material';
+import { MatDialogRef, MAT_DIALOG_DATA, MatSelect, MatDialog } from '@angular/material';
 import { DataService } from 'src/app/services.ts/data.service';
 import { TableItem } from 'src/app/models/tableItem';
 import { FormControl } from '@angular/forms';
@@ -10,6 +10,8 @@ import 'rxjs';
 import { SelectItem } from 'src/app/models/selectItem';
 import { AtpResponseBase } from 'src/app/models/AtpResponseBase';
 import { TranslateService } from '@ngx-translate/core';
+import { TreeNode } from 'src/app/models/treeNode';
+import { ModalTreeComponent } from '../modal-tree/modal-tree.component';
 
 @Component({
   selector: 'seo-main',
@@ -24,7 +26,7 @@ export class SeoMainComponent implements OnInit {
   public mgFilterCtrl: FormControl = new FormControl();
 
   public filteredBrands: ReplaySubject<SelectItem[]> = new ReplaySubject<SelectItem[]>(1);
-  public filteredNodes: ReplaySubject<SelectItem[]> = new ReplaySubject<SelectItem[]>(1);
+  public filteredNodes: ReplaySubject<TreeNode[]> = new ReplaySubject<TreeNode[]>(1);
   public filteredManus: ReplaySubject<SelectItem[]> = new ReplaySubject<SelectItem[]>(1);
   public filteredMgs: ReplaySubject<SelectItem[]> = new ReplaySubject<SelectItem[]>(1);
 
@@ -36,11 +38,10 @@ export class SeoMainComponent implements OnInit {
   public inValids: string[] = [];
 
   public brands :SelectItem[] ;
-  public nodes :SelectItem[] ;
   public manus :SelectItem[] ;
   public mgs :SelectItem[] ;
 
-  constructor(public dialogRef: MatDialogRef<SeoMainComponent>,@Inject(MAT_DIALOG_DATA) public data: any , public _dataService :DataService , public _translationService : TranslateService) { 
+  constructor(public dialog:MatDialog, public dialogRef: MatDialogRef<SeoMainComponent>,@Inject(MAT_DIALOG_DATA) public data: any , public _dataService :DataService , public _translationService : TranslateService) { 
     if (data.item){
       this.currentItem = data.item;
       this.isNew = false;
@@ -48,14 +49,14 @@ export class SeoMainComponent implements OnInit {
   }
 
   ngOnInit() {
-    forkJoin([this._dataService.getBrands(), this._dataService.getNodes() , this._dataService.getManu()]).subscribe(results => {
+    forkJoin([this._dataService.getBrands(), this._dataService.getManu()]).subscribe(results => {
       if (results.length > 0) {
         this.brands = results[0].data.items;
-        this.nodes = results[1].data.items;
-        this.manus = results[2].data.items;
+        // this.nodes = results[1].data.items;
+        this.manus = results[1].data.items;
 
         this.filteredBrands.next(this.brands.slice());
-        this.filteredNodes.next(this.nodes.slice());
+        // this.filteredNodes.next(this.nodes.slice());
         this.filteredManus.next(this.manus.slice());
       }
     });
@@ -86,9 +87,9 @@ export class SeoMainComponent implements OnInit {
     this.brandFilterCtrl.valueChanges.pipe(takeUntil(this._onDestroy)).subscribe(() => {
         this.filtering(this.brands , this.brandFilterCtrl.value , this.filteredBrands);
       });
-    this.nodeFilterCtrl.valueChanges.pipe(takeUntil(this._onDestroy)).subscribe(() => {
-        this.filtering(this.nodes , this.nodeFilterCtrl.value , this.filteredNodes);
-      });
+    // this.nodeFilterCtrl.valueChanges.pipe(takeUntil(this._onDestroy)).subscribe(() => {
+    //     this.filtering(this.nodes , this.nodeFilterCtrl.value , this.filteredNodes);
+    //   });
 
     this.manuFilterCtrl.valueChanges.pipe(takeUntil(this._onDestroy)).subscribe(() => {
         this.filtering(this.manus , this.manuFilterCtrl.value , this.filteredManus);
@@ -104,6 +105,17 @@ export class SeoMainComponent implements OnInit {
     return o1.name === o2.name && o1.id === o2.id;
   }
 
+  openDialog(){
+
+    const dialogRef = this.dialog.open(ModalTreeComponent, {
+      width: '710px',
+      disableClose: true
+    });
+
+    dialogRef.afterClosed().subscribe(( result:SelectItem )=> {
+      this.currentItem.treeNode = result;
+    });
+  }
   getMG(createNewMG : boolean){
     if(createNewMG)
       this.currentItem.modelGroup = {name : ' ', id : null}
@@ -119,6 +131,10 @@ export class SeoMainComponent implements OnInit {
     this.mgFilterCtrl.valueChanges.pipe(takeUntil(this._onDestroy)).subscribe(() => {
       this.filtering(this.mgs, this.mgFilterCtrl.value , this.filteredMgs);
     });
+  }
+
+  qwe(){
+    console.log(this.currentItem);
   }
 
   filtering(array :any[] , search :string , filtered:any) {

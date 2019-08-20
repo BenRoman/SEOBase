@@ -99,3 +99,7 @@ table-search > div > div > button{
     margin: auto;
     width: 50px;
 }
+
+.node-select .mat-select-placeholder{
+    color: rgba(0,0,0,.87) !important;
+}

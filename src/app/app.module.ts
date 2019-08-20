@@ -12,6 +12,8 @@ import {CookieService} from 'ngx-cookie-service';
 import {TranslateLoader, TranslateModule} from '@ngx-translate/core';
 import {TranslateHttpLoader} from '@ngx-translate/http-loader';
 import {HTTP_INTERCEPTORS, HttpClient, HttpClientModule} from '@angular/common/http';
+import { ModalTreeComponent } from './app-components/modal-tree/modal-tree.component';
+import { NgHighlightModule } from 'ngx-text-highlight';
 
 export function HttpLoaderFactory(http: HttpClient) {
   return new TranslateHttpLoader(http);
@@ -22,6 +24,7 @@ export function HttpLoaderFactory(http: HttpClient) {
     AppComponent,
     SeoMainComponent,
     TableSearchComponent,
+    ModalTreeComponent,
   ],
   imports: [
     HttpClientModule,
@@ -37,9 +40,10 @@ export function HttpLoaderFactory(http: HttpClient) {
         deps: [HttpClient]
       }
     }),
-    NgxFlagIconCssModule
+    NgxFlagIconCssModule,
+    NgHighlightModule
   ],
-  entryComponents: [SeoMainComponent],
+  entryComponents: [SeoMainComponent , ModalTreeComponent],
   providers: [CookieService],
   bootstrap: [AppComponent]
 })

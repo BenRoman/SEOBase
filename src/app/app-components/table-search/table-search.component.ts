@@ -79,9 +79,6 @@ export class TableSearchComponent implements OnInit {
     }
   }
 
-
-
-
   removeItem(id:string){
     Swal.fire({
       title: this._translationService.instant('client_info_texts.removing_question_text'),

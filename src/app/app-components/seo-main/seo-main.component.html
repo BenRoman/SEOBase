@@ -2,6 +2,7 @@
   <div class="col-lg-12">
     <div class="container-fluid">
       <i class="material-icons float-right" (click)="close()">clear</i>
+      <i class="material-icons float-right" (click)="qwe()">edit</i>
       <div class="px-2 py-3">
         <h5>{{ 'labels_and_placeholders.select_target_URL' | translate}}</h5>
         <div class="row col-lg-12 mt-3">
@@ -96,13 +97,15 @@
             </div>
             <div class="col-lg-3 " *ngIf= "currentItem.treeNode.name" >
               <h6> {{ 'labels_and_placeholders.checkboxes.node' | translate}} </h6>
-              <mat-select placeholder="{{ 'labels_and_placeholders.checkboxes.node' | translate}}" class="form-control" [(ngModel)]="this.currentItem.treeNode" [compareWith]="compareObjects" [ngClass]="{'validation-selects' : inValids.includes('treeNode') }" (selectionChange)="inValids = []">
-                <mat-option>
+              <!-- <button (click)="openDialog()">Tree</button> -->
+              
+              <mat-select placeholder = "{{this.currentItem.treeNode.id? this.currentItem.treeNode.name: 'labels_and_placeholders.checkboxes.node' | translate}}" class="form-control" [ngClass]="{'validation-selects' : inValids.includes('treeNode') , 'node-select':this.currentItem.treeNode.id }" (click)="openDialog() ; inValids = []">
+                <!-- <mat-option>
                   <ngx-mat-select-search [formControl]="nodeFilterCtrl" [placeholderLabel]="'labels_and_placeholders.placeholder_for_ngx_mat_select' | translate"></ngx-mat-select-search>
                 </mat-option>
                 <mat-option *ngFor="let node of filteredNodes | async" [value]="node">
-                  {{node.name}}
-                </mat-option>
+                  {{node.treeNodeDescription}}
+                </mat-option> -->
               </mat-select>
             </div>
           </div>
@@ -116,7 +119,7 @@
             <div class="col-lg-3 " *ngIf= "currentItem.modelGroup.name != ''">
               <h6 [class]="inValids.includes('modelGroup')?'validation-words':'none'">{{ 'validation_labels.required_field' | translate}}</h6>  
             </div>
-            <div class="col-lg-3 " *ngIf= "currentItem.treeNode.name != ''">
+            <div class="col-lg-3 " *ngIf= "currentItem.treeNode.treeNodeDescription != ''">
               <h6 [class]="inValids.includes('treeNode')?'validation-words':'none'">{{ 'validation_labels.required_field' | translate}}</h6>  
             </div>
           </div>
