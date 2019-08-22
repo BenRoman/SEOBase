@@ -103,3 +103,7 @@ table-search > div > div > button{
 .node-select .mat-select-placeholder{
     color: rgba(0,0,0,.87) !important;
 }
+
+.highlighted{
+    background: #ea782b;
+  }

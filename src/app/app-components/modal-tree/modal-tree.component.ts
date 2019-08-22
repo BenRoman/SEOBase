@@ -12,7 +12,6 @@ import { NestedTreeControl } from '@angular/cdk/tree';
   styleUrls: ['./modal-tree.component.css']
 })
 export class ModalTreeComponent implements OnInit {
-  @ViewChild('tree') tree;
 
   public choosenNode: TreeNode = null;
   public dataSource = new MatTreeNestedDataSource<TreeNode>();
@@ -32,42 +31,39 @@ export class ModalTreeComponent implements OnInit {
   ngOnInit() {
     this._dataService.getNodes().subscribe(res => {this.dataSource.data = res.data.items });
   }
+  
+
+  hightlightWord(keyWord: string) {
+    Array.from(document.getElementsByClassName("highlight-element-selector")).forEach( element => {
+      if (element.lastChild.nodeValue.toLocaleLowerCase().includes(keyWord.toLowerCase() )){
+        var start = element.lastChild.nodeValue.toLowerCase().search(keyWord.toLowerCase());
+        var forChange = element.lastChild.nodeValue.slice(start, start + keyWord.length);
+        var newOne = element.lastChild.nodeValue.split(forChange).join('<span class="highlighted">'+ forChange +'</span>');
+        element.innerHTML = element.innerHTML.replace(element.innerHTML.split('>').pop() , newOne);
+      }
+    });
+  }
 
 
   search(searchKey: any){
-    console.log(this.tree)
     this.treeControl.collapseAll();
  
-    var routes: TreeNode[][] = [];
-    var resArray: TreeNode[] = [];
-
-    // this._dataService.getNodes().subscribe(res => {
-    //   res.data.items.forEach((item: TreeNode) => {
-    //     rec(item.nestedTreeNodes, [item]);
-    //   });
-    //   convertToTree(routes);
-    //   this.dataSource.data = resArray;
-    //   treeFilter();
-    // });
-
-    // function rec(array: TreeNode[], newNode: TreeNode[]) {
-    //   array.forEach(subItem => {
-    //     var tmp: TreeNode[] = newNode.slice(0)
-    //     tmp.push(subItem)
-    //     subItem.treeNodeDescription.toLowerCase().includes(searchKey.toLocaleLowerCase()) ? routes.push(tmp) : rec(subItem.nestedTreeNodes, tmp)
-    //   })
-    // }
-
-    this._dataService.getNodes().subscribe(res => {
+    this._dataService.getNodes().subscribe(async res => {
       var arr: TreeNode[] = [];
       res.data.items.forEach((item: TreeNode) => {
-        item.nestedTreeNodes = rec2(item);
+        item.nestedTreeNodes = recFilter(item);
         item.nestedTreeNodes.length? arr.push(removeDouble(item)): false;
       });
       this.dataSource.data = arr;
-      this.treeControl.dataNodes = arr, 
-      this.treeControl.expandAll()
+      this.treeControl.dataNodes = arr;
+      this.treeControl.expandAll();
+      await delay();
+      this.hightlightWord(searchKey);
     });
+    
+    function delay() {
+      return new Promise( resolve => setTimeout(resolve, 0) );
+    }
 
     function removeDouble(experimental: TreeNode): TreeNode{
       var uniqueChilds: TreeNode = JSON.parse(JSON.stringify(experimental));
@@ -76,7 +72,8 @@ export class ModalTreeComponent implements OnInit {
       })
       return uniqueChilds;
     }
-    function rec2(newNode: TreeNode): TreeNode[]{
+    
+    function recFilter(newNode: TreeNode): TreeNode[]{
       var potentialKids: TreeNode[] = [];
       newNode.nestedTreeNodes.forEach(element => {
         if(element.treeNodeDescription.toLowerCase().includes(searchKey.toLocaleLowerCase())){
@@ -84,36 +81,55 @@ export class ModalTreeComponent implements OnInit {
         }
         else
           if(element.nestedTreeNodes.length){
-            var child = rec2(element);
+            var child = recFilter(element);
             element.nestedTreeNodes = [];
             child.forEach(item =>{ 
-              debugger;
               element.nestedTreeNodes.push(item);
               potentialKids.push(element);
             });
           }
 
-      });
+        });
       return potentialKids;
     }
-
-    function convertToTree(sourceArray: TreeNode[][]){
-      sourceArray.forEach((element: TreeNode[]) => {
-        var i = 0;
-        var parentNode: TreeNode = element.slice(0,1)[i];
-        adder(parentNode)
+    
+    
+    // var resArray: TreeNode[] = [];
+    // var routes: TreeNode[][] = [];
+    // this._dataService.getNodes().subscribe(res => {
+    //   res.data.items.forEach((item: TreeNode) => {
+    //     rec(item.nestedTreeNodes, [item]);
+    //   });
+    //   convertToTree(routes);
+    //   this.dataSource.data = resArray;
+    //   treeFilter();
+    // });
+  
+    // function rec(array: TreeNode[], newNode: TreeNode[]) {
+    //   array.forEach(subItem => {
+    //     var tmp: TreeNode[] = newNode.slice(0)
+    //     tmp.push(subItem)
+    //     subItem.treeNodeDescription.toLowerCase().includes(searchKey.toLocaleLowerCase()) ? routes.push(tmp) : rec(subItem.nestedTreeNodes, tmp)
+    //   })
+    // }
+    
+    // function convertToTree(sourceArray: TreeNode[][]){
+    //   sourceArray.forEach((element: TreeNode[]) => {
+    //     var i = 0;
+    //     var parentNode: TreeNode = element.slice(0,1)[i];
+    //     adder(parentNode)
         
-        function adder(tmp: TreeNode){
-          if(element[++i]){
-            tmp.nestedTreeNodes = [];
-            tmp.nestedTreeNodes.push(element[i]);
-            adder(tmp.nestedTreeNodes[0]);
-          }
-        }
-
-        resArray.push(parentNode);
-      });
-    }
-
+    //     function adder(tmp: TreeNode){
+    //       if(element[++i]){
+    //         tmp.nestedTreeNodes = [];
+    //         tmp.nestedTreeNodes.push(element[i]);
+    //         adder(tmp.nestedTreeNodes[0]);
+    //       }
+    //     }
+        
+    //     resArray.push(parentNode);
+    //   });
+    // }
+    
   }
 }

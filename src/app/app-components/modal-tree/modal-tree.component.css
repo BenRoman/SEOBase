@@ -149,7 +149,7 @@
   
   .mat-icon {
     margin-bottom: 3px;
-    margin-left: 5px;
+    margin-left: -8px;
     margin-right: -3px;
   }
   
@@ -217,12 +217,6 @@
   height: 36px;
 }
 
-
-
-.ngx-text-highlight{
-  background:yellow;
-}
-.highlight{
-  color: red;
-  background: red;
+.highlighted{
+  background: #ea782b;
 }

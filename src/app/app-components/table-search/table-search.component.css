@@ -104,3 +104,7 @@ mat-table{
 .invisible{
     display:none;
 }
+
+input{
+    padding-right: 30px;
+}

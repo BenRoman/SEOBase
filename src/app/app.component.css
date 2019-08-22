@@ -1,8 +1,18 @@
 .btn-icon-selected{
     border: solid rgba(155, 155, 155, 0.47);
-    border-width: 3px;
+    border-width: 2px;
+    border-radius: 4px;
 }
 
 .language-clickable{
     cursor: pointer;
+}
+
+.flags img{
+    width:25px;
+}
+
+.mat-slide-toggle{
+    display:inline-block;
+    vertical-align:middle;
 }

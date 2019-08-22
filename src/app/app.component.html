@@ -11,15 +11,20 @@
       <link rel="stylesheet" [href]='cssUrl'>
 
       <div class="float-right ">
-        <span class="mr-2">
+        <span class="mr-2 flags">
           <label [class]="selectedLanguageIso=='en'?'btn-icon-selected':''">
-            <flag-icon country="gb" class="language-clickable mx-1 " (click)="setLanguage('en')">en</flag-icon>
+            <img src="https://img.icons8.com/color/48/000000/great-britain.png" class="language-clickable mx-1 " (click)="setLanguage('en')">
+            <!-- <flag-icon country="gb" class="language-clickable mx-1 " (click)="setLanguage('en')" rectangled>en</flag-icon> -->
           </label>
           <label [class]="selectedLanguageIso=='de'?'btn-icon-selected':''">
-            <flag-icon country="de" class="language-clickable mx-1" (click)="setLanguage('de')">de</flag-icon>
+            <!-- <flag-icon country="de" class="language-clickable mx-1" (click)="setLanguage('de')">de</flag-icon> -->
+            <img src="https://img.icons8.com/color/48/000000/germany.png" class="language-clickable mx-1 " (click)="setLanguage('de')">
+
           </label>
           <label [class]="selectedLanguageIso=='ua'?'btn-icon-selected':''">
-            <flag-icon country="ua" class="language-clickable mx-1" (click)="setLanguage('ua')">de</flag-icon>
+            <!-- <flag-icon country="ua" class="language-clickable mx-1" (click)="setLanguage('ua')">de</flag-icon> -->
+            <img src="https://img.icons8.com/color/48/000000/ukraine.png" class="language-clickable mx-1 " (click)="setLanguage('ua')">
+
           </label>
         </span>
         <mat-slide-toggle color="secondary" [(ngModel)]="useDark"><span>{{selectedTheme.name}}</span></mat-slide-toggle>
