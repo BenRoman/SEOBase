@@ -17,10 +17,13 @@ export class ModalTreeComponent implements OnInit {
   public dataSource = new MatTreeNestedDataSource<TreeNode>();
   public treeControl = new NestedTreeControl<TreeNode>(node => node.nestedTreeNodes);
 
-  constructor(
-    public dialogRef: MatDialogRef<ModalTreeComponent>,@Inject(MAT_DIALOG_DATA) public data: any,
-    public _dataService :DataService , public _translationService : TranslateService  ) {}
-  
+  constructor(public dialogRef: MatDialogRef<ModalTreeComponent>,@Inject(MAT_DIALOG_DATA) public data: any, public _dataService :DataService , public _translationService : TranslateService  ) {
+    // this.choosenNode = data;
+    // if(this.choosenNode)
+    //   this.treeControl.expand(this.choosenNode);
+  }
+    
+
   hasChild = (_: number, node: TreeNode) => !!node.nestedTreeNodes && node.nestedTreeNodes.length > 0;
   
   close(): void {
@@ -46,8 +49,7 @@ export class ModalTreeComponent implements OnInit {
 
 
   search(searchKey: any){
-    this.treeControl.collapseAll();
- 
+    // this.treeControl.collapseAll();
     this._dataService.getNodes().subscribe(async res => {
       var arr: TreeNode[] = [];
       res.data.items.forEach((item: TreeNode) => {

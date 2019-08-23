@@ -1,16 +1,21 @@
 <div class="row">
   <div class="col-lg-12 mb-4">
-    <h4>Select Node:</h4>
+    <h4>{{ 'labels_and_placeholders.tree_node_title' | translate}}</h4>
     <div class="row search-block">
       <div class="col-lg-9">
-        <input type="text" class="form-control mb-2" placeholder="Type node name" #searchKey>
+        <input type="text" class="form-control mb-2" placeholder="{{ 'labels_and_placeholders.placeholder_for_tree_search' | translate}}" #searchKey>
+        <i class="material-icons error_outline" matTooltip="{{ 'labels_and_placeholders.tree_node_search_helper' | translate}}"
+        matTooltipPosition="above" matTooltipClass="tooltippp">error_outline</i>
       </div>
       <div class="col-lg-3">
         <button mat-button class="btn btn-dark buttons" (click)="search(searchKey.value)"><mat-icon class="material-icons">search</mat-icon>Suchen</button>
       </div>
+      <div class="col-lg-12 help-text" *ngIf="!dataSource.data.length">
+        <i class="material-icons">warning</i>
+        <span>Nothing found, please, change your search request!</span>        
+      </div>
     </div>
   </div>
-  <!-- <i class="material-icons float-right" (click)="close()">clear</i> -->
 
   <div class="col-lg-12 custom">
     <form>
@@ -35,7 +40,6 @@
                     {{node.treeNodeDescription}}
                   </div>
                 </div>
-
                 <ul>
                   <div *ngIf="treeControl.isExpanded(node)">
                     <ng-container matTreeNodeOutlet></ng-container>
@@ -50,7 +54,7 @@
   </div>
   
   <div class="col-lg-12 buttons mt-4">
-      <button mat-button type="button" class="btn btn-light mr-2" (click)=" choosenNode = null ; close() "><mat-icon class="material-icons">close</mat-icon>Cancel </button>
-      <button mat-button type="button" class="btn btn-primary" (click)="close()"><mat-icon class="material-icons ">check</mat-icon>Ok </button>
+      <button mat-button type="button" class="btn btn-light mr-2" (click)="choosenNode = null ; close() "><mat-icon class="material-icons">close</mat-icon>{{ 'button_texts.cancel_button' | translate}} </button>
+      <button mat-button type="button" class="btn btn-primary" (click)="close()"><mat-icon class="material-icons ">check</mat-icon>{{ 'button_texts.ok_button' | translate}} </button>
   </div>
 </div>

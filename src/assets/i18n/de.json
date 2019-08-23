@@ -1,6 +1,8 @@
 {
     "button_texts": {
       "add_new_button": "",
+      "ok_button": "",
+      "cancel_button": "",
       "preview_button": "",
       "add_button": "",
       "confirm_remove_button": "",
@@ -44,9 +46,12 @@
       "search_input_placeholder": " ...",
       "select_target_URL": "",
       "or": "",
+      "tree_node_title": "",
       "URL_link_label":"",
       "search_input_helper":"",
+      "tree_node_search_helper":"",
       "placeholder_for_ngx_mat_select":"",
+      "placeholder_for_tree_search":"",
       "checkboxes":{
         "manufacturer":"",
         "model_group":"",

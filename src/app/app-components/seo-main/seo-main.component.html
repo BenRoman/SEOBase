@@ -187,7 +187,7 @@
         </div>
         <!--mat-button -->
         <div class="text-right">
-          <button class="btn btn-primary " mat-button (click)="preview()"><mat-icon>remove_red_eye</mat-icon>{{ 'button_texts.preview_button' | translate}}</button>
+          <!-- <button class="btn btn-primary " mat-button (click)="preview()"><mat-icon>remove_red_eye</mat-icon>{{ 'button_texts.preview_button' | translate}}</button> -->
           <button class="btn btn-success ml-4 pl-1" mat-button (click)="addNewItem()" ><mat-icon *ngIf= "isNew">add</mat-icon> <mat-icon *ngIf="!isNew">edit</mat-icon>  {{ (isNew ? 'button_texts.add_button' : 'button_texts.column_buttons.edit_column_button' )|translate }}  </button>
         </div>
       </div>

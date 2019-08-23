@@ -1,6 +1,8 @@
 {
     "button_texts": {
       "add_new_button": "створити новий",
+      "ok_button": "Ok",
+      "cancel_button": "Атмєна",
       "preview_button": "Показати",
       "add_button": "Додати",
       "confirm_remove_button": "Так, видалити!",
@@ -43,9 +45,12 @@
       "search_input_placeholder": "Бранд, вузол, марка, модель ...",
       "select_target_URL": "Виберіть цільове посилання",
       "or": "або",
+      "tree_node_title": "Виберіть:",
       "URL_link_label":"посилання:",
       "search_input_helper":"підказка ",
+      "tree_node_search_helper":"наклацайте імя вузла",
       "placeholder_for_ngx_mat_select":"Виберіть необхідний",
+      "placeholder_for_tree_search":"Введіть ім'я вузла",
       "checkboxes":{
         "manufacturer":"Мануфактура",
         "model_group":"Модель",

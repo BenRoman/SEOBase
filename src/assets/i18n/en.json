@@ -1,6 +1,8 @@
 {
     "button_texts": {
       "add_new_button": "add new",
+      "ok_button": "Ok",
+      "cancel_button": "Cancel",
       "preview_button": "Preview",
       "add_button": "Add",
       "confirm_remove_button": "Yes, delete it!",
@@ -43,9 +45,12 @@
       "search_input_placeholder": "Brand, node, manufacturer, model group ...",
       "select_target_URL": "Select target URL",
       "or": "or",
+      "tree_node_title": "Select Node:",
       "URL_link_label":"URL link:",
       "search_input_helper":"In the search field you can enter the name of the brand, Node (n-000), Model group (mg-0000), Vehicle manufacturer (ma-0000)",
+      "tree_node_search_helper":"In this field type Node name which you want to add to the URL",
       "placeholder_for_ngx_mat_select":"Please, select necessary ...",
+      "placeholder_for_tree_search":"Type node name",
       "checkboxes":{
         "manufacturer":"Manufacturer",
         "model_group":"ModelGroup",

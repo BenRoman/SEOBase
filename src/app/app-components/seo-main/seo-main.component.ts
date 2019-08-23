@@ -40,7 +40,7 @@ export class SeoMainComponent implements OnInit {
   public brands :SelectItem[] ;
   public manus :SelectItem[] ;
   public mgs :SelectItem[] ;
-
+ 
   constructor(public dialog:MatDialog, public dialogRef: MatDialogRef<SeoMainComponent>,@Inject(MAT_DIALOG_DATA) public data: any , public _dataService :DataService , public _translationService : TranslateService) { 
     if (data.item){
       this.currentItem = data.item;
@@ -109,11 +109,12 @@ export class SeoMainComponent implements OnInit {
 
     const dialogRef = this.dialog.open(ModalTreeComponent, {
       width: '710px',
-      disableClose: true
+      disableClose: true,
+      data: this.currentItem.treeNode
     });
 
     dialogRef.afterClosed().subscribe(( result:SelectItem )=> {
-      this.currentItem.treeNode = result;
+      result.id? this.currentItem.treeNode = result: false;
     });
   }
   getMG(createNewMG : boolean){
@@ -123,7 +124,6 @@ export class SeoMainComponent implements OnInit {
     this.mgs = this._dataService.getMg(this.currentItem.manufacturer.id).subscribe(res => {
       if(res.data){
         this.mgs = res.data.items
-        console.log("mg"+ this.mgs.length)
         this.filteredMgs.next(this.mgs.slice());
       }
     });

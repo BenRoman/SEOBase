@@ -22,7 +22,7 @@
   mat-nested-tree-node mat-nested-tree-node ul > div::before{
     content: "";
     position: absolute;
-    left: -19px;
+    left: -26px;
     top: -2px;
     bottom: 11px;
     border-left: 1px dashed #888;
@@ -31,7 +31,7 @@
   mat-nested-tree-node ul > div::before{
     content: "";
     position: absolute;
-    left: -15px;
+    left: -20px;
     top: -3px;
     bottom: 11px;
     border-left: 1px dashed #888;
@@ -44,37 +44,37 @@
   mat-nested-tree-node mat-nested-tree-node li::before{
     content: '';
     position: absolute;
-    width: 14px;
+    width: 16px;
     border-top: 1px dashed #888;
     top: 14px;
-    left: -14px;
+    left: -18px;
   }
   
   mat-nested-tree-node  mat-tree-node li::before{
     content: '';
     position: absolute;
-    width: 11px;
+    width: 16px;
     border-top: 1px dashed #888;
     top: 11px;
-    left: -14px;
+    left: -19px;
   }
   
   mat-nested-tree-node mat-nested-tree-node mat-nested-tree-node  li:before{
     content: '';
     position: absolute;
-    width: 18px;
+    width:21px;
     border-top: 1px dashed #888;
     top: 13px;
-    left: -18px;
+    left: -24px;
   }
   
   mat-nested-tree-node mat-nested-tree-node mat-tree-node  li:before{
     content: '';
     position: absolute;
-    width: 14px;
+    width: 20px;
     border-top: 1px dashed #888;
     top: 11px;
-    left: -17px;
+    left: -24px;
   }
   
   mat-nested-tree-node mat-nested-tree-node .mat-icon-button{
@@ -95,6 +95,7 @@
    .selected {
     background-color: #3e3c3c;
     position: relative;
+    border-radius: 3px ;
   } 
   mat-tree-node.selected:before{
     content:"";
@@ -102,7 +103,6 @@
     top:0;
     right:100%;
     width:5px;
-    border-radius: 3px 0 0 3px;
     background-color: #3e3c3c;
     bottom:0;
     z-index: 5;
@@ -219,4 +219,32 @@
 
 .highlighted{
   background: #ea782b;
+}
+
+.row .col-lg-12 input{
+  padding-right: 35px;
+}
+
+.row .col-lg-12 i.error_outline{
+  position: absolute;
+  top: 10px;
+  right: 25px;
+  margin-top: -2px;
+  color: #777;
+  transform: rotate(180deg);
+  font-size: 21px;
+}
+
+.help-text span{
+  font-size: 14px;
+  margin-left:5px;
+}
+
+.help-text i{
+  font-size: 20px;
+}
+
+.help-text{
+  color:#ea782b;
+  display: flex;
 }
