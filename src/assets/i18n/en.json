@@ -42,6 +42,7 @@
       "ATP_label": "ATP SEO Content",
       "items_per_page_mat_info": "Items per page",
       "header_over_search_input": "Search in SEO Content",
+      "manu_model_hint":"The content will be posted at this link. When the checkbox is disabled it means that such combination is not available for content placement.",
       "search_input_placeholder": "Brand, node, manufacturer, model group ...",
       "select_target_URL": "Select target URL",
       "or": "or",

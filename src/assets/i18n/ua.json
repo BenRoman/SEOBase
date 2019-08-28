@@ -2,7 +2,7 @@
     "button_texts": {
       "add_new_button": "створити новий",
       "ok_button": "Ok",
-      "cancel_button": "Атмєна",
+      "cancel_button": "Відміна",
       "preview_button": "Показати",
       "add_button": "Додати",
       "confirm_remove_button": "Так, видалити!",
@@ -25,8 +25,8 @@
       "edit_modal_title": "Редаговано!",
       "added_successfully_title": "Додавання пройшло успішно.",
       "add_modal_title": "Додано!",
-      "error_title": "блет",
-      "error_modal_title": "пздц ерора"
+      "error_title": "щось пішло не так",
+      "error_modal_title": "спробуйте знову"
     },
     "column_headers": {
       "target_column": "Ціль",
@@ -40,15 +40,16 @@
   
     "labels_and_placeholders": {
       "ATP_label": "ATP контент менеджер",
-      "items_per_page_mat_info": "Записів на сторінку",
+      "items_per_page_mat_info": "Елементів на сторінку",
       "header_over_search_input": "Пошук в Content Management",
+      "manu_model_hint":"Вміст буде публіковано тут .Коли чекбокси виключені це означає, що така комбінація неможлива для даного місця.",
       "search_input_placeholder": "Бранд, вузол, марка, модель ...",
       "select_target_URL": "Виберіть цільове посилання",
       "or": "або",
       "tree_node_title": "Виберіть:",
       "URL_link_label":"посилання:",
       "search_input_helper":"підказка ",
-      "tree_node_search_helper":"наклацайте імя вузла",
+      "tree_node_search_helper":"введіть імя вузла",
       "placeholder_for_ngx_mat_select":"Виберіть необхідний",
       "placeholder_for_tree_search":"Введіть ім'я вузла",
       "checkboxes":{
@@ -62,7 +63,7 @@
     },
     "validation_labels":{
       "empty_creation":"Виберіть хоч щось",
-      "required_field":"Надо заповнити"
+      "required_field":"Треба заповнити"
     }
   }
   

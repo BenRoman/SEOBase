@@ -16,6 +16,9 @@
         <!-- checkboxes area -->
 
         <div class="row col-lg-12 mt-4 settings-block" *ngIf="currentItem.cmsContentType == 1">
+          
+          <div  class="select_link" matTooltip="{{ 'labels_and_placeholders.manu_model_hint' | translate}}"matTooltipPosition="above" matTooltipClass="tooltippp"> <i class="material-icons error_outline" >error_outline</i><strong class="url-strong">Select link: </strong> </div>
+         
           <mat-checkbox class="mr-1" value="manufacturer"
             [ngClass]="{'diselected-check-box' : currentItem.modelGroup.name , 'box-validator' : inValids.includes('Can not be empty') }"
             (change)="currentItem.manufacturer.name = $event.checked ? ' ' : ''; inValids = []" [ngModel]="(currentItem.manufacturer.name && !currentItem.modelGroup.name)">{{ 'labels_and_placeholders.checkboxes.manufacturer' | translate}}</mat-checkbox>
@@ -26,7 +29,7 @@
             (change)="currentItem.modelGroup.name = $event.checked ? ' ' : ''  ; $event.checked ? currentItem.manufacturer.name = ' ' : none; inValids = []"  [ngModel]="currentItem.modelGroup.name">{{ 'labels_and_placeholders.checkboxes.model_group' | translate}}</mat-checkbox>
           <i class="material-icons"> add</i>
           
-          <mat-checkbox class="mr-1" (change)="currentItem.treeNode.name = $event.checked ? ' ' : ''; inValids = []"  [ngModel]="currentItem.treeNode.name" [ngClass]="{'box-validator' : inValids.includes('Can not be empty') } " >{{ 'labels_and_placeholders.checkboxes.node' | translate}}</mat-checkbox>
+          <mat-checkbox class="mr-1" (change)="currentItem.treeNode.treeNodeDescription = $event.checked ? ' ' : ''; inValids = []"  [ngModel]="currentItem.treeNode.treeNodeDescription" [ngClass]="{'box-validator' : inValids.includes('Can not be empty') } " >{{ 'labels_and_placeholders.checkboxes.node' | translate}}</mat-checkbox>
           <i class="material-icons"> add</i>
           <mat-checkbox class="mr-1" (change)="currentItem.displayBrand.name = $event.checked ? ' ' : ''; inValids = []" [ngModel]="currentItem.displayBrand.name" [ngClass]="{'box-validator' : inValids.includes('Can not be empty') } " >{{ 'labels_and_placeholders.checkboxes.brand' | translate}}</mat-checkbox>
           
@@ -52,7 +55,7 @@
               {{currentItem.displayBrand.id ? "/" + currentItem.displayBrand.name :"" }}
               {{currentItem.manufacturer.id ? "/m-" + currentItem.manufacturer.id :"" }}
               {{currentItem.modelGroup.id ? "/mg-" + currentItem.modelGroup.id :"" }}
-              {{currentItem.treeNode.id ? "/" + currentItem.treeNode.name :"" }}
+              {{currentItem.treeNode.treeNodeId ? "/" + currentItem.treeNode.treeNodeDescription :"" }}
             </span>
           </h6>
         </div>
@@ -95,11 +98,11 @@
                 </mat-option>
               </mat-select>
             </div>
-            <div class="col-lg-3 " *ngIf= "currentItem.treeNode.name" >
+            <div class="col-lg-3 " *ngIf= "currentItem.treeNode.treeNodeDescription" >
               <h6> {{ 'labels_and_placeholders.checkboxes.node' | translate}} </h6>
               <!-- <button (click)="openDialog()">Tree</button> -->
               
-              <mat-select placeholder = "{{this.currentItem.treeNode.id? this.currentItem.treeNode.name: 'labels_and_placeholders.checkboxes.node' | translate}}" class="form-control" [ngClass]="{'validation-selects' : inValids.includes('treeNode') , 'node-select':this.currentItem.treeNode.id }" (click)="openDialog() ; inValids = []">
+              <mat-select placeholder = "{{this.currentItem.treeNode.treeNodeId? this.currentItem.treeNode.treeNodeDescription: 'labels_and_placeholders.checkboxes.node' | translate}}" class="form-control" [ngClass]="{'validation-selects' : inValids.includes('treeNode') , 'node-select':this.currentItem.treeNode.treeNodeId }" (click)="openDialog() ; inValids = []">
                 <!-- <mat-option>
                   <ngx-mat-select-search [formControl]="nodeFilterCtrl" [placeholderLabel]="'labels_and_placeholders.placeholder_for_ngx_mat_select' | translate"></ngx-mat-select-search>
                 </mat-option>
@@ -129,13 +132,8 @@
           <div class="row my-3">
             <div class="col-lg-6 ">
               <h6>{{ 'labels_and_placeholders.checkboxes.category' | translate}}</h6>
-              <mat-select placeholder="{{ 'labels_and_placeholders.checkboxes.category' | translate}}" class="form-control" [(ngModel)]="this.currentItem.treeNode" [compareWith]="compareObjects" [ngClass]="{'validation-selects' : (inValids.includes('Can not be empty') || inValids.includes('treeNode')) }" (selectionChange)="inValids = []">
-                <mat-option>
-                  <ngx-mat-select-search [formControl]="nodeFilterCtrl" [placeholderLabel]="'labels_and_placeholders.placeholder_for_ngx_mat_select' | translate"></ngx-mat-select-search>
-                </mat-option>
-                <mat-option *ngFor="let node of filteredNodes | async" [value]="node">
-                  {{node.name}}
-                </mat-option>
+              <mat-select placeholder = "{{this.currentItem.treeNode.treeNodeId? this.currentItem.treeNode.treeNodeDescription: 'labels_and_placeholders.checkboxes.node' | translate}}" class="form-control" [ngClass]="{'validation-selects' : inValids.includes('treeNode') , 'node-select':this.currentItem.treeNode.treeNodeId }" (click)="openDialog() ; inValids = []">
+                
               </mat-select>
             </div>
             <div class="col-lg-6 ">

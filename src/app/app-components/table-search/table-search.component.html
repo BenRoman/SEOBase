@@ -9,8 +9,8 @@
     <div class="col-lg-3">
       <input type="text" class="form-control"
         placeholder="{{ 'labels_and_placeholders.search_input_placeholder' | translate}}" [(ngModel)]="keyWord"
-        (input)="tableFilter()">
-      <i class="material-icons" matTooltip="{{ 'labels_and_placeholders.search_input_helper' | translate}}"
+        (input)="filterTable()">
+      <i class="material-icons error_outline" matTooltip="{{ 'labels_and_placeholders.search_input_helper' | translate}}"
         matTooltipPosition="above" matTooltipClass="tooltippp">error_outline</i>
     </div>
     <div class="col-lg-1">
@@ -48,7 +48,7 @@
                 {{ 'column_headers.node_column' | translate}}
               </mat-header-cell>
               <mat-cell *matCellDef="let element">
-                {{element.treeNode.name }} </mat-cell>
+                {{element.treeNode.treeNodeDescription }} </mat-cell>
             </ng-container>
 
             <ng-container matColumnDef="Manufacturer">
@@ -73,7 +73,7 @@
               </mat-header-cell>
               <mat-cell *matCellDef="let element">
                 <span>
-                  {{element.cmsContentType == '1' ? 'search':'category'}}{{element.manufacturer.id ?"/ m-" + element.manufacturer.id : ""}}{{element.modelGroup.id? "/ mg-" + element.modelGroup.id : ""}}{{element.displayBrand.name? "/ " + element.displayBrand.name : ""}}{{element.treeNode.name ? "/ " + element.treeNode.name : ""}}
+                  {{element.cmsContentType == '1' ? 'search':'category'}}{{element.manufacturer.id ?"/ m-" + element.manufacturer.id : ""}}{{element.modelGroup.id? "/ mg-" + element.modelGroup.id : ""}}{{element.displayBrand.name? "/ " + element.displayBrand.name : ""}}{{element.treeNode.treeNodeDescription ? "/ " + element.treeNode.treeNodeDescription : ""}}
                 </span>
               </mat-cell>
             </ng-container>
@@ -111,4 +111,3 @@
     </div>
   </div>
 </div>
-

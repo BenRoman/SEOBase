@@ -37,11 +37,11 @@ export class TableSearchComponent implements OnInit {
     })
   }
 
-  tableFilter(){
+  filterTable(){
     this._dataService.get().subscribe(res => this.dataSource.data = res.data.items.filter(item => (
       ( item.modelGroup.name?item.modelGroup.name.toLowerCase().includes(this.keyWord.toLowerCase()) : false ) || 
       ( item.displayBrand.name?item.displayBrand.name.toLowerCase().includes(this.keyWord.toLowerCase()) : false ) || 
-      ( item.treeNode.name?item.treeNode.name.toLowerCase().includes(this.keyWord.toLowerCase()) : false ) || 
+      ( item.treeNode.treeNodeDescription?item.treeNode.treeNodeDescription.toLowerCase().includes(this.keyWord.toLowerCase()) : false ) || 
       ( item.manufacturer.name?item.manufacturer.name.toLowerCase().includes(this.keyWord.toLowerCase()) : false)
     )));
   }
@@ -53,7 +53,7 @@ export class TableSearchComponent implements OnInit {
       disableClose: true,
       data: { item : tmp }
     });
-    dialogRef.afterClosed().subscribe(w =>( this.tableFilter() ));
+    dialogRef.afterClosed().subscribe(w =>( this.filterTable() ));
   }
 
   sortData(sort: Sort) {
@@ -67,7 +67,7 @@ export class TableSearchComponent implements OnInit {
       const isAsc = sort.direction === 'asc';
       switch (sort.active) {
         case 'brand': return compare(a.displayBrand.name, b.displayBrand.name, isAsc);
-        case 'node': return compare(a.treeNode.name, b.treeNode.name, isAsc);
+        case 'node': return compare(a.treeNode.treeNodeDescription, b.treeNode.treeNodeDescription, isAsc);
         case 'manu': return compare(a.manufacturer.name, b.manufacturer.name, isAsc);
         case 'mg': return compare(a.modelGroup.name, b.modelGroup.name, isAsc);
         

@@ -65,3 +65,23 @@ i{
     height: 23px;
 }
 
+.url-strong{
+    text-decoration: underline;
+    cursor: pointer;
+}
+
+i.error_outline{
+    font-size: 20px;
+    position: unset;
+}
+
+.select_link{
+    display: flex;
+    align-items: center;
+    padding-bottom: 12px;
+    margin-right: 6px;
+}
+
+.select_link i{
+    margin-left: 0px;
+}

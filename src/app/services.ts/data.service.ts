@@ -19,12 +19,10 @@ export class DataService extends SeoContentBaseService {
 
   private static _seoContentGetBrandsUrl = '/brands';
   private static _seoContentGetNodesUrl = '/nodes';
-  private static _seoContentGetManusUrl = '/manufacturer';
+  private static _seoContentGetManusUrl = '/manufacturers';
   private static _seoContentGetMgsUrl = '/model_groups';
 
-  private static _seoDeleteTableItemUrl = '/delete/';
-  private static _seoEditTableItemUrl = '/edit';
-  private static _seoAddTableItemUrl = '/add';
+  private static _seoTableItemUrl = '/tables';
 
 
   // items: TableItem[] = [
@@ -92,12 +90,12 @@ export class DataService extends SeoContentBaseService {
 
   get():any{
     let headers = new HttpHeaders({'Content-Type': 'application/json'});
-    return this.http.get( this.getUrl(DataService._seoContentGetUrl) , {headers:headers});
+    return this.http.get( this.getUrl(DataService._seoContentGetUrl + DataService._seoTableItemUrl) , {headers:headers});
   }
 
   set(itemForSet: TableItem) {
     const headers = new HttpHeaders({'Content-Type': 'application/json'});
-    return this.http.patch(this.getUrl(DataService._seoContentGetUrl + DataService._seoAddTableItemUrl), JSON.stringify(
+    return this.http.post(this.getUrl(DataService._seoContentGetUrl + DataService._seoTableItemUrl), JSON.stringify(
       {
         Id : itemForSet.id ,
         CMSId : itemForSet.cmsContentId , 
@@ -105,14 +103,14 @@ export class DataService extends SeoContentBaseService {
         ManuId : itemForSet.manufacturer.id , 
         MGId : itemForSet.modelGroup.id , 
         BrandId : itemForSet.displayBrand.id , 
-        NodeId : itemForSet.treeNode.id , 
+        NodeId : itemForSet.treeNode.treeNodeId , 
         Memo : itemForSet.memo
       }), {headers: headers});
   }
 
   edit(itemForEdit: TableItem) {
     const headers = new HttpHeaders({'Content-Type': 'application/json'});
-    return this.http.patch(this.getUrl(DataService._seoContentGetUrl + DataService._seoEditTableItemUrl), JSON.stringify(
+    return this.http.put(this.getUrl(DataService._seoContentGetUrl + DataService._seoTableItemUrl), JSON.stringify(
       {
         Id : itemForEdit.id ,
         CMSId : itemForEdit.cmsContentId , 
@@ -120,14 +118,14 @@ export class DataService extends SeoContentBaseService {
         ManuId : itemForEdit.manufacturer.id , 
         MGId : itemForEdit.modelGroup.id , 
         BrandId : itemForEdit.displayBrand.id , 
-        NodeId : itemForEdit.treeNode.id , 
+        NodeId : itemForEdit.treeNode.treeNodeId , 
         Memo : itemForEdit.memo
       }), {headers: headers});
   }
 
   delete(id: string) {
     const headers = new HttpHeaders({'Content-Type': 'application/json'});
-    return this.http.patch(this.getUrl(DataService._seoContentGetUrl + DataService._seoDeleteTableItemUrl + id), JSON.stringify(id), {headers: headers});
+    return this.http.delete(this.getUrl(DataService._seoContentGetUrl + DataService._seoTableItemUrl + "/" + id) , {headers: headers});
     // this.items = this.items.filter(item => item.id != id.toString());
   }
 

@@ -5,38 +5,40 @@ import { TranslateService } from '@ngx-translate/core';
 import { TreeNode } from 'src/app/models/treeNode';
 import { MatTreeNestedDataSource } from '@angular/material/tree';
 import { NestedTreeControl } from '@angular/cdk/tree';
+import { element } from '@angular/core/src/render3';
 
 @Component({
   selector: 'app-modal-tree',
   templateUrl: './modal-tree.component.html',
   styleUrls: ['./modal-tree.component.css']
 })
-export class ModalTreeComponent implements OnInit {
+export class ModalTreeComponent{
 
   public choosenNode: TreeNode = null;
   public dataSource = new MatTreeNestedDataSource<TreeNode>();
   public treeControl = new NestedTreeControl<TreeNode>(node => node.nestedTreeNodes);
 
   constructor(public dialogRef: MatDialogRef<ModalTreeComponent>,@Inject(MAT_DIALOG_DATA) public data: any, public _dataService :DataService , public _translationService : TranslateService  ) {
-    // this.choosenNode = data;
-    // if(this.choosenNode)
-    //   this.treeControl.expand(this.choosenNode);
+    this.choosenNode = data;      
+    this._dataService.getNodes().subscribe(res => {
+      this.dataSource.data = res.data.items, 
+
+      this.expandSelected()// TODO
+      
+    });
   }
-    
+  
+  expandSelected(){
+  }
 
   hasChild = (_: number, node: TreeNode) => !!node.nestedTreeNodes && node.nestedTreeNodes.length > 0;
   
   close(): void {
-    this.dialogRef.close(this.choosenNode? {id: this.choosenNode.treeNodeId , name: this.choosenNode.treeNodeDescription } : { id: null , name: " " });
-
-  }
-
-  ngOnInit() {
-    this._dataService.getNodes().subscribe(res => {this.dataSource.data = res.data.items });
+    this.dialogRef.close(this.choosenNode? this.choosenNode : { treeNodeId: null , treeNodeDescription: " " });
   }
   
-
-  hightlightWord(keyWord: string) {
+  async hightlightWord(keyWord: string) {
+    await delay();  //  TODO check in the future
     Array.from(document.getElementsByClassName("highlight-element-selector")).forEach( element => {
       if (element.lastChild.nodeValue.toLocaleLowerCase().includes(keyWord.toLowerCase() )){
         var start = element.lastChild.nodeValue.toLowerCase().search(keyWord.toLowerCase());
@@ -45,6 +47,9 @@ export class ModalTreeComponent implements OnInit {
         element.innerHTML = element.innerHTML.replace(element.innerHTML.split('>').pop() , newOne);
       }
     });
+    function delay() {
+      return new Promise( resolve => setTimeout(resolve, 0) );
+    }
   }
 
 
@@ -59,13 +64,10 @@ export class ModalTreeComponent implements OnInit {
       this.dataSource.data = arr;
       this.treeControl.dataNodes = arr;
       this.treeControl.expandAll();
-      await delay();
       this.hightlightWord(searchKey);
     });
     
-    function delay() {
-      return new Promise( resolve => setTimeout(resolve, 0) );
-    }
+  
 
     function removeDouble(experimental: TreeNode): TreeNode{
       var uniqueChilds: TreeNode = JSON.parse(JSON.stringify(experimental));

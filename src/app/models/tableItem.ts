@@ -1,5 +1,6 @@
 import * as uuid from 'uuid';
 import { SelectItem } from './selectItem';
+import { TreeNode } from './treeNode';
 export class TableItem{
     cmsContentId: number
     cmsContentType: number
@@ -13,13 +14,13 @@ export class TableItem{
     modelGroup: SelectItem
     modifyBy: string
     modifyUtc: string 
-    treeNode: SelectItem
+    treeNode: TreeNode
     
     constructor() {
         this.modelGroup = { name : "" , id : null};
         this.manufacturer = { name : "" , id : null};
         this.displayBrand = { name : "" , id : null};
-        this.treeNode = { name : "" , id : null};
+        this.treeNode = { treeNodeDescription : "" , treeNodeId : null};
         // this.Id = uuid.v4();  
         // this.Model_Group = "";
         // this.Manufacturer = "";

@@ -31,7 +31,7 @@ export class SeoMainComponent implements OnInit {
   public filteredMgs: ReplaySubject<SelectItem[]> = new ReplaySubject<SelectItem[]>(1);
 
   protected _onDestroy = new Subject<void>();
-  
+
   private currentItem:TableItem  = new TableItem();
   public categorySwipe: string;
   public isNew: boolean = true;
@@ -40,8 +40,8 @@ export class SeoMainComponent implements OnInit {
   public brands :SelectItem[] ;
   public manus :SelectItem[] ;
   public mgs :SelectItem[] ;
- 
-  constructor(public dialog:MatDialog, public dialogRef: MatDialogRef<SeoMainComponent>,@Inject(MAT_DIALOG_DATA) public data: any , public _dataService :DataService , public _translationService : TranslateService) { 
+
+  constructor(public dialog:MatDialog, public dialogRef: MatDialogRef<SeoMainComponent>,@Inject(MAT_DIALOG_DATA) public data: any , public _dataService :DataService , public _translationService : TranslateService) {
     if (data.item){
       this.currentItem = data.item;
       this.isNew = false;
@@ -60,10 +60,10 @@ export class SeoMainComponent implements OnInit {
         this.filteredManus.next(this.manus.slice());
       }
     });
-    // this.brands = this._dataService.getBrands().subscribe(res => { 
-    //   this.brands = res.data.items 
+    // this.brands = this._dataService.getBrands().subscribe(res => {
+    //   this.brands = res.data.items
     //   console.log("brands"+ this.brands.length)
-    //  
+    //
     // } );
     // this.nodes = this._dataService.getNodes().subscribe(res =>{
     //   this.nodes = res.data.items
@@ -75,13 +75,13 @@ export class SeoMainComponent implements OnInit {
     //   console.log("manu"+ this.manus.length)
     //   this.filteredManus.next(this.manus.slice());
     // });
-    
+
     if(this.isNew)
       this.currentItem.cmsContentType = 1;
     else
       if (this.currentItem.manufacturer.id)
         this.getMG(false);
-        
+
     this.categorySwipe = 'manufacturer';
 
     this.brandFilterCtrl.valueChanges.pipe(takeUntil(this._onDestroy)).subscribe(() => {
@@ -113,14 +113,14 @@ export class SeoMainComponent implements OnInit {
       data: this.currentItem.treeNode
     });
 
-    dialogRef.afterClosed().subscribe(( result:SelectItem )=> {
-      result.id? this.currentItem.treeNode = result: false;
+    dialogRef.afterClosed().subscribe(( result:TreeNode )=> {
+      result.treeNodeId? this.currentItem.treeNode = result: false;
     });
   }
   getMG(createNewMG : boolean){
     if(createNewMG)
       this.currentItem.modelGroup = {name : ' ', id : null}
-      
+
     this.mgs = this._dataService.getMg(this.currentItem.manufacturer.id).subscribe(res => {
       if(res.data){
         this.mgs = res.data.items
@@ -160,15 +160,15 @@ export class SeoMainComponent implements OnInit {
     this.inValids = [];
     var isNewItem = 0;
     ['displayBrand' , 'manufacturer', 'treeNode', 'modelGroup'].forEach(prop => {
-      if (this.currentItem[prop].name == " " )
+      if (this.currentItem[prop].name == " " || this.currentItem[prop].treeNodeDescription == " " )
         this.inValids.push(prop);
-      if (this.currentItem[prop].name == "" )
+      if (this.currentItem[prop].name == "" || this.currentItem[prop].treeNodeDescription == "")
         isNewItem++;
     });
     if(isNewItem == 4 )
       this.inValids.push("Can not be empty");
   }
-  
+
   addNewItem(){
     this.validator();
     if ( this.inValids.length == 0 ){
@@ -182,22 +182,22 @@ export class SeoMainComponent implements OnInit {
             this._translationService.instant('client_info_texts.error_modal_title'),
             this._translationService.instant('client_info_texts.error_title'),
             'error') ,
-          this.close() )); 
+          this.close() ));
       else
         this._dataService.set(this.currentItem).subscribe((res:AtpResponseBase) => ( !res.error?
           Swal.fire(
               this._translationService.instant('client_info_texts.add_modal_title'),
               this._translationService.instant('client_info_texts.added_successfully_title'),
-              'success') : 
+              'success') :
           Swal.fire(
             this._translationService.instant('client_info_texts.error_modal_title'),
             this._translationService.instant('client_info_texts.error_title'),
             'error') ,
-          this.close() )); 
+          this.close() ));
     }
   }
 
-  preview(){
-    Swal.fire(this.currentItem.displayBrand.name);
-  }
+  // preview(){
+  //   Swal.fire(this.currentItem.displayBrand.name);
+  // }
 }
