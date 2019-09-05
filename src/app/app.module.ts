@@ -14,6 +14,7 @@ import {TranslateHttpLoader} from '@ngx-translate/http-loader';
 import {HTTP_INTERCEPTORS, HttpClient, HttpClientModule} from '@angular/common/http';
 import { ModalTreeComponent } from './app-components/modal-tree/modal-tree.component';
 import { NgHighlightModule } from 'ngx-text-highlight';
+import { DialogWindowComponent } from './app-components/dialog-window/dialog-window.component';
 
 export function HttpLoaderFactory(http: HttpClient) {
   return new TranslateHttpLoader(http);
@@ -25,6 +26,7 @@ export function HttpLoaderFactory(http: HttpClient) {
     SeoMainComponent,
     TableSearchComponent,
     ModalTreeComponent,
+    DialogWindowComponent
   ],
   imports: [
     HttpClientModule,
@@ -43,7 +45,7 @@ export function HttpLoaderFactory(http: HttpClient) {
     NgxFlagIconCssModule,
     NgHighlightModule
   ],
-  entryComponents: [SeoMainComponent , ModalTreeComponent],
+  entryComponents: [SeoMainComponent ,DialogWindowComponent,  ModalTreeComponent],
   providers: [CookieService],
   bootstrap: [AppComponent]
 })

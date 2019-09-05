@@ -1,0 +1,22 @@
+<!-- <div class="row">
+  <i class="material-icons float-right" (click)="close()">clear</i>
+</div>
+
+<mat-dialog-content>
+  <ng-container *ngComponentOutlet="data.component" ></ng-container>
+</mat-dialog-content> -->
+
+<!-- <seo-main (onClosed)="close()"></seo-main> -->
+<!-- <mat-dialog-actions>
+    <button mat-button mat-dialog-close>Cancel</button>
+    <button mat-button [mat-dialog-close]="true">Close</button>
+</mat-dialog-actions> -->
+
+<header>
+  <button mat-icon-button mat-dialog-close="true">
+    <i class="material-icons">clear</i>
+  </button>
+</header>
+<mat-dialog-content>
+  <ng-template #target></ng-template>
+</mat-dialog-content>

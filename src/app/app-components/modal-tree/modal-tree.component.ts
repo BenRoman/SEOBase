@@ -1,4 +1,4 @@
-import { Component, OnInit, Inject, ViewChild } from '@angular/core';
+import { Component, OnInit, Inject, ViewChild, Output, EventEmitter } from '@angular/core';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material';
 import { DataService } from 'src/app/services.ts/data.service';
 import { TranslateService } from '@ngx-translate/core';
@@ -6,6 +6,7 @@ import { TreeNode } from 'src/app/models/treeNode';
 import { MatTreeNestedDataSource } from '@angular/material/tree';
 import { NestedTreeControl } from '@angular/cdk/tree';
 import { element } from '@angular/core/src/render3';
+import { DialogService } from 'src/app/services.ts/dialog.service';
 
 @Component({
   selector: 'app-modal-tree',
@@ -18,23 +19,11 @@ export class ModalTreeComponent{
   public dataSource = new MatTreeNestedDataSource<TreeNode>();
   public treeControl = new NestedTreeControl<TreeNode>(node => node.nestedTreeNodes);
 
-  constructor(public dialogRef: MatDialogRef<ModalTreeComponent>,@Inject(MAT_DIALOG_DATA) public data: any, public _dataService :DataService , public _translationService : TranslateService  ) {
-    this.choosenNode = data;      
-    this._dataService.getNodes().subscribe(res => {
-      this.dataSource.data = res.data.items, 
-
-      this.expandSelected()// TODO
-      
-    });
-  }
-  
-  expandSelected(){
-  }
-
+  @Output() onClose = new EventEmitter();
   hasChild = (_: number, node: TreeNode) => !!node.nestedTreeNodes && node.nestedTreeNodes.length > 0;
   
   close(): void {
-    this.dialogRef.close(this.choosenNode? this.choosenNode : { treeNodeId: null , treeNodeDescription: " " });
+    this.onClose.emit(this.choosenNode);
   }
   
   async hightlightWord(keyWord: string) {
@@ -55,17 +44,17 @@ export class ModalTreeComponent{
 
   search(searchKey: any){
     // this.treeControl.collapseAll();
-    this._dataService.getNodes().subscribe(async res => {
-      var arr: TreeNode[] = [];
-      res.data.items.forEach((item: TreeNode) => {
-        item.nestedTreeNodes = recFilter(item);
-        item.nestedTreeNodes.length? arr.push(removeDouble(item)): false;
-      });
-      this.dataSource.data = arr;
-      this.treeControl.dataNodes = arr;
-      this.treeControl.expandAll();
-      this.hightlightWord(searchKey);
-    });
+    // this._dataService.getNodes().subscribe(async res => {
+    //   var arr: TreeNode[] = [];
+    //   res.data.items.forEach((item: TreeNode) => {
+    //     item.nestedTreeNodes = recFilter(item);
+    //     item.nestedTreeNodes.length? arr.push(removeDouble(item)): false;
+    //   });
+    //   this.dataSource.data = arr;
+    //   this.treeControl.dataNodes = arr;
+    //   this.treeControl.expandAll();
+    //   this.hightlightWord(searchKey);
+    // });
     
   
 
