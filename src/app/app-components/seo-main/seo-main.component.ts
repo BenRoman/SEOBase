@@ -19,7 +19,7 @@ import { DialogService } from 'src/app/services.ts/dialog.service';
   templateUrl: './seo-main.component.html',
   styleUrls: ['./seo-main.component.css']
 })
-export class SeoMainComponent implements OnInit {
+export class SeoMainComponent{
   
   
   public brandFilterCtrl: FormControl = new FormControl();
@@ -43,27 +43,18 @@ export class SeoMainComponent implements OnInit {
   public manus :SelectItem[] ;
   public mgs :SelectItem[] ;
 
+  
 
   @Output() onNodesOpen = new EventEmitter();
-  @Output() onMGLoad = new EventEmitter();//TODO
+  @Output() onMGLoad = new EventEmitter();
   @Output() onEdit = new EventEmitter();
   @Output() onAdd = new EventEmitter();
   @Output() onClose = new EventEmitter();
 
-
-  ngOnInit() {
-    debugger;
-    // if(this.isNew)
-    //   this.currentItem.cmsContentType = 1;
-    // else
-    //   if (this.currentItem.manufacturer.id)
-    //     this.getMG(false);
-
-  }
-
   qwe(){
     debugger;
   }
+
   ngOnDestroy() {
     this._onDestroy.next();
     this._onDestroy.complete();
@@ -73,27 +64,13 @@ export class SeoMainComponent implements OnInit {
     return o1.name === o2.name && o1.id === o2.id;
   }
 
-
   openDialog(){
     this.onNodesOpen.emit(this.currentItem.treeNode);
   }
 
-  
-  // getMG(createNewMG : boolean){
-  //   if(createNewMG)
-  //     this.currentItem.modelGroup = {name : ' ', id : null}
-
-  //   this.mgs = this.onMGLoad.emit(this.currentItem.manufacturer.id).subscribe(res => {
-  //     if(res.data){
-  //       this.mgs = res.data.items
-  //       this.filteredMgs.next(this.mgs.slice());
-  //     }
-  //   });
-
-  //   this.mgFilterCtrl.valueChanges.pipe(takeUntil(this._onDestroy)).subscribe(() => {
-  //     this.filtering(this.mgs, this.mgFilterCtrl.value , this.filteredMgs);
-  //   });
-  // }
+  getMG(createNewMG : boolean){
+    this.onMGLoad.emit(createNewMG);
+  }
 
   filtering(array :any[] , search :string , filtered:any) {
     if (!array) {
@@ -113,7 +90,7 @@ export class SeoMainComponent implements OnInit {
   validator(){
     this.inValids = [];
     var isNewItem = 0;
-    ['displayBrand' , 'manufacturer', 'treeNode', 'modelGroup'].forEach(prop => {
+    Object.keys(new TableItem()).forEach(prop => {
       if (this.currentItem[prop].name == " " || this.currentItem[prop].treeNodeDescription == " " )
         this.inValids.push(prop);
       if (this.currentItem[prop].name == "" || this.currentItem[prop].treeNodeDescription == "")
@@ -131,6 +108,7 @@ export class SeoMainComponent implements OnInit {
       else
         this.onAdd.emit(this.currentItem);
       this.onClose.emit();
+      debugger;
     }
   }
 }

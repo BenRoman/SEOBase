@@ -14,7 +14,6 @@ import { SelectItem } from '../models/selectItem';
 })
 export class DataService extends SeoContentBaseService {
 
-  
   private static _seoContentGetUrl = 'seocontent';
 
   private static _seoContentGetBrandsUrl = '/brands';
@@ -90,7 +89,7 @@ export class DataService extends SeoContentBaseService {
 
   get():any{
     let headers = new HttpHeaders({'Content-Type': 'application/json'});
-    return this.http.get( this.getUrl(DataService._seoContentGetUrl + DataService._seoTableItemUrl) , {headers:headers});
+    return this.http.get( this.getUrl(DataService._seoContentGetUrl + DataService._seoTableItemUrl) , {headers});
   }
 
   set(itemForSet: TableItem) {
@@ -105,7 +104,7 @@ export class DataService extends SeoContentBaseService {
         BrandId : itemForSet.displayBrand.id , 
         NodeId : itemForSet.treeNode.treeNodeId , 
         Memo : itemForSet.memo
-      }), {headers: headers});
+      }), {headers});
   }
 
   edit(itemForEdit: TableItem) {

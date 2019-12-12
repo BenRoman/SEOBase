@@ -13,6 +13,7 @@ import { takeUntil } from 'rxjs/operators';
 import { AtpResponseBase } from './models/AtpResponseBase';
 import Swal from 'sweetalert2';
 import { TreeNode } from './models/treeNode';
+import { NodesOperator } from './services.ts/treeNodesOperations';
 
 @Component({
   selector: 'app-root',
@@ -40,7 +41,7 @@ export class AppComponent {
   }
   set useDark(value: boolean) {
     this._useDark = value;
-    this.selectedTheme = value?this.themes[1]:this.themes[0];
+    this.selectedTheme = value?this.themes[1]:this.themes[0];   
     this.cssUrl = this.sanitizer.bypassSecurityTrustResourceUrl(this.selectedTheme.relUri);
     this.cookieService.set(AppComponent.USE_THEME_COOKIE_KEY, this.selectedTheme.name, 7);
   }
@@ -61,6 +62,18 @@ export class AppComponent {
     if (theme) this.useDark = theme=='Metro';
     else this.useDark = false;
 
+
+    this._dataService.get().subscribe(res =>{ 
+      this.searchTable.dataSource.data = res.data.items
+      this.searchTable.seoLoading = false
+    })
+    this.searchTable.dataSource.paginator = this.searchTable.paginator;
+    this._translate.stream('labels_and_placeholders.items_per_page_mat_info').subscribe(res=>{
+      this.searchTable.dataSource.sort = this.searchTable.sort;
+      this.searchTable.dataSource.paginator._intl.itemsPerPageLabel = res;
+      this.searchTable.dataSource.filter = '';
+    })
+
     this.searchTable.onSeoMainOpen.subscribe((item?: TableItem)=> {
       AppComponent._dialogService.open(SeoMainComponent, {
         function: (obj: SeoMainComponent)=> {
@@ -72,15 +85,36 @@ export class AppComponent {
                 this._dataService.getNodes().subscribe(res => {tree.dataSource.data = res.data.items });
                 tree.choosenNode = node;
                 tree.onClose.subscribe((result: TreeNode)=>{
-                  result.treeNodeId? obj.currentItem.treeNode = result: false;
+                  result? obj.currentItem.treeNode = result: false;
                   AppComponent._dialogService.close('TreeNode');
-                  debugger;
+                });
+                tree.onSearch.subscribe((searchKey: string)=>{
+                  tree.treeControl.collapseAll();
+                  this._dataService.getNodes().subscribe(async res => {
+                    var arr: TreeNode[] = [];
+                    res.data.items.forEach((item: TreeNode) => {
+                      item.nestedTreeNodes = NodesOperator.recFilter(item, searchKey);
+                      item.nestedTreeNodes.length? arr.push(NodesOperator.removeDouble(item)): false;
+                    });
+                    tree.dataSource.data = arr;
+                    tree.treeControl.dataNodes = arr;
+                    tree.treeControl.expandAll();
+                    await NodesOperator.delay();
+                    NodesOperator.hightlightWord(searchKey);
+                  });
                 })
-                debugger;
+             
+                // tree.onNodesGet.subscribe(()=>{
+                //   alert("@@");
+                //   // this._dataService.getNodes().subscribe(res =>{ 
+                //   //   return res;
+                //   // });
+                // })
               }
             }, 'TreeNode', '710px');
           })
           obj.onEdit.subscribe((item: TableItem)=>{
+            console.log(item);
             this._dataService.edit(item).subscribe((res: AtpResponseBase) => (
               !res.error ?
                 Swal.fire(
@@ -109,12 +143,30 @@ export class AppComponent {
           })
           obj.onClose.subscribe(()=>{
             AppComponent._dialogService.close('SeoMain');
-          });
+            debugger
+            this.searchTable.filterTable();
+          })
+          obj.onMGLoad.subscribe((createNewMG: string) =>{
+            console.log(createNewMG);
+            if (createNewMG)
+              obj.currentItem.modelGroup = { name: ' ', id: null }
+
+            this._dataService.getMg(obj.currentItem.manufacturer.id).subscribe(res => {
+              if (res.data) {
+                obj.mgs = res.data.items
+                obj.filteredMgs.next(obj.mgs.slice());
+              }
+            });
+
+            obj.mgFilterCtrl.valueChanges.pipe(takeUntil(obj._onDestroy)).subscribe(() => {
+              obj.filtering(obj.mgs, obj.mgFilterCtrl.value, obj.filteredMgs);
+            });
+          })
           
 
           //  fields
           {
-            item? (obj.currentItem = item ): (obj.currentItem = new TableItem(), obj.currentItem.cmsContentType = 1),
+            item? obj.currentItem = item : obj.currentItem = new TableItem(),
             obj.categorySwipe = 'manufacturer';
             obj.isNew = item?false: true,
 
@@ -127,11 +179,11 @@ export class AppComponent {
                 obj.filteredManus.next(obj.manus.slice());
               }
             });
-            // if (obj.isNew)
-            //   obj.currentItem.cmsContentType = 1;
-            // else
-            //   if (obj.currentItem.manufacturer.id)
-            //     obj.getMG(false);
+            if (obj.isNew)
+              obj.currentItem.cmsContentType = 1;
+            else
+              if (obj.currentItem.manufacturer.id)
+                obj.getMG(false);
 
             obj.brandFilterCtrl.valueChanges.pipe(takeUntil(obj._onDestroy)).subscribe(() => {
               obj.filtering(obj.brands, obj.brandFilterCtrl.value, obj.filteredBrands);
@@ -143,7 +195,6 @@ export class AppComponent {
         }
       }, 'SeoMain', '800px');
     });
-
     this.searchTable.onRemove.subscribe((id: string)=>{
       Swal.fire({
         title: this._translate.instant('client_info_texts.removing_question_text'),
@@ -170,7 +221,14 @@ export class AppComponent {
         } 
       })
     })
-    
+    this.searchTable.onFilter.subscribe((keyWord: string)=>{
+      this._dataService.get().subscribe(res => this.searchTable.dataSource.data = res.data.items.filter(item => (
+        ( item.modelGroup.name?item.modelGroup.name.toLowerCase().includes(keyWord.toLowerCase()) : false ) || 
+        ( item.displayBrand.name?item.displayBrand.name.toLowerCase().includes(keyWord.toLowerCase()) : false ) || 
+        ( item.treeNode.treeNodeDescription?item.treeNode.treeNodeDescription.toLowerCase().includes(keyWord.toLowerCase()) : false ) || 
+        ( item.manufacturer.name?item.manufacturer.name.toLowerCase().includes(keyWord.toLowerCase()) : false)
+      )));
+    })
   }
 
   setLanguage(languageIso: string) {

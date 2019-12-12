@@ -3,9 +3,9 @@
     <h4>{{ 'labels_and_placeholders.tree_node_title' | translate}}</h4>
     <div class="row search-block">
       <div class="col-lg-9">
-        <input type="text" class="form-control mb-2" placeholder="{{ 'labels_and_placeholders.placeholder_for_tree_search' | translate}}" #searchKey>
+        <input type="text" class="form-control mb-2" placeholder="{{ 'labels_and_placeholders.placeholder_for_tree_search' | translate}}" #searchKey (input)="search(searchKey.value)">
         <i class="material-icons error_outline" matTooltip="{{ 'labels_and_placeholders.tree_node_search_helper' | translate}}"
-        matTooltipPosition="above" matTooltipClass="tooltippp">error_outline</i>
+        matTooltipPosition="above" matTooltipClass="tooltippp" >error_outline</i>
       </div>
       <div class="col-lg-3">
         <button mat-button class="btn btn-dark buttons" (click)="search(searchKey.value)"><mat-icon class="material-icons">search</mat-icon>Suchen</button>
@@ -16,7 +16,6 @@
       </div>
     </div>
   </div>
-
   <div class="col-lg-12 custom">
     <form>
       <div class="row my-4">

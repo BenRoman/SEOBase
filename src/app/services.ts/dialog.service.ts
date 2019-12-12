@@ -14,8 +14,9 @@ export class DialogService {
 
   private mediumConf = {height: 'auto', width: '70%', ...this.conf};
 
-  
+
   public open(component: any, data: any, id: any, width?: any) {
+    debugger;
     this.mediumConf['data'] = { component, data };
     this.mediumConf['id'] = id ;
     this.mediumConf['width'] = width? width: 'auto';
@@ -24,7 +25,9 @@ export class DialogService {
   }
 
   public close(id: any) {
+    console.log(id);
     this.dialog.getDialogById(id).close();
+    debugger;
   }
   
 //  public error<T>(data: any) {
